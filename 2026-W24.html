@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>포근나루 주간 계획표 — 2026년 6월 2주차</title>
+  <style>
+    :root {
+      --cream: #FAF3EA;
+      --apricot: #F5EBE0;
+      --terra-light: #C8845A;
+      --terra-deep: #C4763A;
+      --dark-brown: #3C2415;
+      --white: #ffffff;
+      --shadow: rgba(60, 36, 21, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--dark-brown);
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--terra-deep) 0%, var(--terra-light) 100%);
+      color: var(--cream);
+      padding: 36px 24px 28px;
+      text-align: center;
+      position: relative;
+    }
+
+    header .logo-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 6px;
+    }
+
+    header h1 {
+      font-size: clamp(20px, 5vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    header .sub {
+      font-size: 13px;
+      opacity: 0.8;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      justify-content: center;
+      padding: 18px 20px;
+      background: var(--apricot);
+      border-bottom: 1px solid rgba(196,118,58,0.15);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--dark-brown);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── WEEK GRID ── */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0;
+      padding: 20px 12px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── DAY COLUMN ── */
+    .day-col {
+      background: var(--white);
+      border: 1px solid rgba(196,118,58,0.18);
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .day-col:first-child { border-radius: 14px 0 0 14px; }
+    .day-col:last-child  { border-radius: 0 14px 14px 0; }
+
+    /* 요일 헤더 */
+    .day-header {
+      padding: 12px 8px 10px;
+      text-align: center;
+      background: var(--terra-deep);
+      color: var(--cream);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .day-header.weekend-sat { background: var(--terra-light); }
+    .day-header.weekend-sun { background: #A0604A; }
+
+    .day-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .day-date {
+      font-size: 10px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    /* 카드 목록 */
+    .day-cards {
+      padding: 8px 6px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      background: var(--apricot);
+    }
+
+    /* 개별 카드 */
+    .card {
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 11px;
+      line-height: 1.45;
+      border-left: 3px solid transparent;
+      box-shadow: 0 1px 3px var(--shadow);
+      transition: transform 0.15s ease;
+    }
+
+    .card:hover { transform: translateY(-1px); }
+
+    .card-time {
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.7;
+      margin-bottom: 2px;
+      letter-spacing: 0.3px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    .card-note {
+      font-size: 10px;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    /* 카테고리별 색상 */
+    .cat-routine {
+      background: #FFF8F1;
+      border-left-color: #D4A574;
+      color: #5A3825;
+    }
+
+    .cat-reading {
+      background: #FFF0E6;
+      border-left-color: var(--terra-deep);
+      color: var(--dark-brown);
+    }
+
+    .cat-note {
+      background: #FDE8D8;
+      border-left-color: #B86030;
+      color: var(--dark-brown);
+    }
+
+    .cat-discussion {
+      background: #F0E4D8;
+      border-left-color: #8B4513;
+      color: var(--dark-brown);
+    }
+
+    .cat-fixed {
+      background: #E8F4EC;
+      border-left-color: #5A9E6F;
+      color: #1A4028;
+    }
+
+    .cat-promo {
+      background: #EEE8F8;
+      border-left-color: #7C5CBF;
+      color: #2A1A50;
+    }
+
+    .cat-deadline {
+      background: #FDEAEA;
+      border-left-color: #C0392B;
+      color: #4A0F0F;
+    }
+
+    /* ── MOBILE: 세로 스크롤 레이아웃 ── */
+    @media (max-width: 900px) {
+      .week-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px 12px 40px;
+      }
+
+      .day-col:first-child,
+      .day-col:last-child {
+        border-radius: 14px;
+      }
+
+      .day-col { border-radius: 14px; }
+
+      .day-header { border-radius: 14px 14px 0 0; position: static; }
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 28px 16px 20px; }
+      .card { font-size: 12px; }
+      .card-title { font-size: 12.5px; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 20px 16px 32px;
+      font-size: 11px;
+      color: var(--terra-light);
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .day-empty {
+      color: var(--terra-light);
+      font-size: 11px;
+      text-align: center;
+      padding: 20px 8px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-label">포근나루 · Pogeun Naru</div>
+  <h1>📅 2026년 6월 2주차 계획표</h1>
+  <div class="sub">06월 08일 (월) — 06월 14일 (일) &nbsp;|&nbsp; W24</div>
+</header>
+
+<!-- 범례 -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#D4A574;"></div>
+    <span>매일 루틴</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--terra-deep);"></div>
+    <span>독서</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#B86030;"></div>
+    <span>독서노트</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#8B4513;"></div>
+    <span>독서토론</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#5A9E6F;"></div>
+    <span>고정 일정</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#7C5CBF;"></div>
+    <span>홍보 작업</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#C0392B;"></div>
+    <span>마감/접수</span>
+  </div>
+</div>
+
+<!-- 주간 그리드 -->
+<div class="week-grid">
+
+  <!-- ─── 월요일 ─── -->
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">월</div>
+      <div class="day-date">06/08</div>
+    </div>
+    <div class="day-cards">
+
+      <!-- 새벽미사 -->
+      <div class="card cat-fixed">
+        <div class="card-time">~06:00</div>
+        <div class="card-title">⛪ 성당 도착</div>
+        <div class="card-note">새벽미사 · 미카엘라 새벽복사</div>
+      </div>
+
+      <!-- 줌라이팅 -->
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <!-- 원서 읽기 -->
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <!-- 독서노트 마감 (전날 → 월요일 오전) -->
+      <div class="card cat-note">
+        <div class="card-time">~11:00 마감</div>
+        <div class="card-title">📝 존재와 무 독서노트</div>
+        <div class="card-note">3장 4절 453~473쪽 기준</div>
+      </div>
+
+      <!-- 독서 마감 -->
+      <div class="card cat-deadline">
+        <div class="card-time">오늘 마감</div>
+        <div class="card-title">📚 존재와 무 독서</div>
+        <div class="card-note">3장 4절 453~473쪽</div>
+      </div>
+
+      <!-- 홍보 요청 -->
+      <div class="card cat-promo">
+        <div class="card-time">오전 중</div>
+        <div class="card-title">📣 선릿모닝 홍보</div>
+        <div class="card-note">윤슬에게 작업 요청하기</div>
+      </div>
+
+      <!-- 존재와 무 줌 토론 -->
+      <div class="card cat-discussion">
+        <div class="card-time">20:00–22:00</div>
+        <div class="card-title">💬 존재와 무 줌 토론</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 화요일 ─── -->
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">화</div>
+      <div class="day-date">06/09</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <!-- 고백록 독서 시작 권장 (마감 13일 토요일 밤 전까지) -->
+      <div class="card cat-reading">
+        <div class="card-time">오전 중</div>
+        <div class="card-title">📚 고백록 독서 시작</div>
+        <div class="card-note">10~11권 · 마감 06/13(토)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 수요일 ─── -->
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">수</div>
+      <div class="day-date">06/10</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <div class="card cat-fixed">
+        <div class="card-time">09:50–10:30</div>
+        <div class="card-title">🏫 이루미 학교 공개수업</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">10:40–11:40</div>
+        <div class="card-title">🎨 레지오</div>
+      </div>
+
+      <div class="card cat-reading">
+        <div class="card-time">오후 중</div>
+        <div class="card-title">📚 고백록 독서 계속</div>
+        <div class="card-note">10~11권</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 목요일 ─── -->
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">목</div>
+      <div class="day-date">06/11</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <div class="card cat-fixed">
+        <div class="card-time">11:00–17:00</div>
+        <div class="card-title">🚆 대전 디퍼 오프라인</div>
+        <div class="card-note">줌 미팅 대체 · 이동 포함</div>
+      </div>
+
+      <!-- 디퍼 줌 미팅은 오프라인으로 대체됨 -->
+      <div class="card cat-note" style="opacity:0.55;">
+        <div class="card-time">21:00–23:30</div>
+        <div class="card-title">🚫 디퍼 줌 미팅</div>
+        <div class="card-note">오프라인으로 대체</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 금요일 ─── -->
+  <div class="day-col">
+    <div class="day-header">
+      <div class="day-name">금</div>
+      <div class="day-date">06/12</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">10:00–10:40</div>
+        <div class="card-title">⛪ 오전 미사</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">10:40–12:10</div>
+        <div class="card-title">📖 마르코 성경공부</div>
+      </div>
+
+      <!-- 고백록 독서 마감 전날 준비 -->
+      <div class="card cat-reading">
+        <div class="card-time">오후 중</div>
+        <div class="card-title">📚 고백록 독서 마무리</div>
+        <div class="card-note">10~11권 · 내일(토) 마감 전 완독</div>
+      </div>
+
+      <!-- 고백록 독서노트 작성 (마감 일요일 → 하루 전 토요일 → 준비는 금요일) -->
+      <div class="card cat-note">
+        <div class="card-time">저녁 중</div>
+        <div class="card-title">📝 고백록 독서노트 작성</div>
+        <div class="card-note">토요일 일정 前 여유 있을 때</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 토요일 ─── -->
+  <div class="day-col">
+    <div class="day-header weekend-sat">
+      <div class="day-name">토</div>
+      <div class="day-date">06/13</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <!-- 고백록 독서 마감 (일 마감이므로 토에 완독 목표) -->
+      <div class="card cat-deadline">
+        <div class="card-time">오전 중 완독 목표</div>
+        <div class="card-title">📚 고백록 독서 마감</div>
+        <div class="card-note">10~11권 · 내일(일) 공식 마감</div>
+      </div>
+
+      <div class="card cat-fixed">
+        <div class="card-time">09:30</div>
+        <div class="card-title">🏆 신도초 발명대회 접수</div>
+      </div>
+
+      <div class="card cat-fixed">
+        <div class="card-time">10:00–13:00</div>
+        <div class="card-title">🔬 이루미 발명대회 참가</div>
+      </div>
+
+      <div class="card cat-fixed">
+        <div class="card-time">12:20–14:00</div>
+        <div class="card-title">📸 첫 영성체 촬영 도우미</div>
+        <div class="card-note">발명대회 종료 후 이동</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">14:00–15:50</div>
+        <div class="card-title">👨‍👩‍👧 자모회</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">16:00–17:00</div>
+        <div class="card-title">⛪ 어린이 미사</div>
+      </div>
+
+      <!-- 홍보 작업 마감 확인 -->
+      <div class="card cat-promo">
+        <div class="card-time">오후 중</div>
+        <div class="card-title">📣 윤슬 홍보 작업 마감 확인</div>
+        <div class="card-note">선릿모닝 홍보물</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 일요일 ─── -->
+  <div class="day-col">
+    <div class="day-header weekend-sun">
+      <div class="day-name">일</div>
+      <div class="day-date">06/14</div>
+    </div>
+    <div class="day-cards">
+
+      <div class="card cat-routine">
+        <div class="card-time">05:50–06:25</div>
+        <div class="card-title">✍️ 줌라이팅</div>
+      </div>
+
+      <div class="card cat-routine">
+        <div class="card-time">06:30–06:45</div>
+        <div class="card-title">📖 원서 읽기</div>
+      </div>
+
+      <!-- 고백록 독서노트 마감 (오전 11시 이전) -->
+      <div class="card cat-note">
+        <div class="card-time">~11:00 마감</div>
+        <div class="card-title">📝 고백록 독서노트 마감</div>
+        <div class="card-note">10~11권 기준 · 오전 11시 이전</div>
+      </div>
+
+      <!-- 고백록 독서 공식 마감일 -->
+      <div class="card cat-deadline">
+        <div class="card-time">오늘 마감</div>
+        <div class="card-title">📚 고백록 10~11권 마감일</div>
+      </div>
+
+      <!-- 홍보 검수 -->
+      <div class="card cat-promo">
+        <div class="card-time">오후 중</div>
+        <div class="card-title">🔍 선릿모닝 홍보물 검수</div>
+        <div class="card-note">윤슬 작업 최종 확인</div>
+      </div>
+
+      <!-- 프린키피아 줌 토론 -->
+      <div class="card cat-discussion">
+        <div class="card-time">20:00–22:00</div>
+        <div class="card-title">💬 프린키피아 줌 토론</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- 주간 메모 -->
+<div style="max-width:1400px;margin:0 auto 20px;padding:0 12px;">
+  <div style="background:var(--white);border-radius:14px;padding:20px 24px;border:1px solid rgba(196,118,58,0.18);box-shadow:0 2px 8px var(--shadow);">
+    <div style="font-size:13px;font-weight:700;color:var(--terra-deep);margin-bottom:12px;letter-spacing:0.5px;">📌 이번 주 주요 체크포인트</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;">
+      <div style="background:var(--cream);border-radius:8px;padding:10px 12px;font-size:12px;border-left:3px solid var(--terra-deep);">
+        <strong>월(06/08)</strong> 새벽미사 + 존재와 무 독서노트 ~11시 마감 + 줌 토론 20시
+      </div>
+      <div style="background:var(--cream);border-radius:8px;padding:10px 12px;font-size:12px;border-left:3px solid #5A9E6F;">
+        <strong>수(06/10)</strong> 이루미 공개수업 09:50 + 레지오 10:40
+      </div>
+      <div style="background:var(--cream);border-radius:8px;padding:10px 12px;font-size:12px;border-left:3px solid #5A9E6F;">
+        <strong>목(06/11)</strong> 대전 오프라인 11:00~17:00 · 디퍼 줌 미팅 대체
+      </div>
+      <div style="background:var(--cream);border-radius:8px;padding:10px 12px;font-size:12px;border-left:3px solid #7C5CBF;">
+        <strong>토(06/13)</strong> 발명대회 09:30 → 촬영도우미 12:20 → 자모회 14:00 → 미사 16:00 빡빡한 하루!
+      </div>
+      <div style="background:var(--cream);border-radius:8px;padding:10px 12px;font-size:12px;border-left:3px solid #8B4513;">
+        <strong>일(06/14)</strong> 고백록 독서노트 ~11시 + 홍보검수 + 프린키피아 토론 20시
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>포근나루 대표 이다현 &nbsp;|&nbsp; 2026-W24 &nbsp;|&nbsp; Made with 포근한 마음 🍊</footer>
+
+</body>
+</html>
+```
