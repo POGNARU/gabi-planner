@@ -1,706 +1,588 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>포근나루 주간 계획표 — 2026년 6월 3주차</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년 6월 3주차 계획표 — 햇살</title>
+<style>
+  :root {
+    --cream: #FAF3EA;
+    --apricot: #F5EBE0;
+    --terra-light: #C8845A;
+    --terra-deep: #C4763A;
+    --dark-brown: #3C2415;
+    --routine: #4A7C59;
+    --routine-bg: #E8F5ED;
+    --fixed: #C4763A;
+    --fixed-bg: #FDF0E6;
+    --reading: #6B4FA0;
+    --reading-bg: #F0EBF8;
+    --discussion: #D4700A;
+    --discussion-bg: #FEF3E2;
+    --promo: #2B6CB0;
+    --promo-bg: #EBF4FF;
+    --prep: #718096;
+    --prep-bg: #F7FAFC;
+  }
 
-    body {
-      background-color: #FAF3EA;
-      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-      color: #3C2415;
-      padding: 20px;
-      min-height: 100vh;
-    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    header {
-      text-align: center;
-      padding: 36px 20px 28px;
-      background: linear-gradient(135deg, #F5EBE0 0%, #FAF3EA 100%);
-      border-radius: 20px;
-      border: 1.5px solid #C8845A;
-      margin-bottom: 32px;
-      box-shadow: 0 4px 18px rgba(60,36,21,0.08);
-    }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background-color: var(--cream);
+    color: var(--dark-brown);
+    min-height: 100vh;
+  }
 
-    header .brand {
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #C8845A;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+  /* ── HEADER ── */
+  header {
+    background-color: var(--dark-brown);
+    color: var(--cream);
+    padding: 28px 32px 22px;
+    text-align: center;
+  }
 
-    header h1 {
-      font-size: clamp(20px, 5vw, 30px);
-      font-weight: 800;
-      color: #3C2415;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
+  .brand {
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    opacity: 0.7;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
 
-    header .subtitle {
-      font-size: 14px;
-      color: #C8845A;
-      font-weight: 400;
-    }
+  .header-title {
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
 
-    .week-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
+  .header-sub {
+    font-size: 13px;
+    opacity: 0.65;
+    letter-spacing: 1px;
+  }
 
-    .day-card {
-      background: #FFFFFF;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 3px 14px rgba(60,36,21,0.07);
-      border: 1px solid #F5EBE0;
-      transition: box-shadow 0.2s;
-    }
+  /* ── LEGEND ── */
+  .legend-wrap {
+    background-color: var(--apricot);
+    padding: 14px 24px;
+    border-bottom: 1px solid #E8D8C8;
+  }
 
-    .day-card:hover {
-      box-shadow: 0 6px 24px rgba(60,36,21,0.12);
-    }
+  .legend-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--terra-deep);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
 
-    .day-header {
-      background: linear-gradient(135deg, #C8845A, #C4763A);
-      color: #FAF3EA;
-      padding: 14px 18px;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
+  .legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
 
-    .day-header .weekday {
-      font-size: 20px;
-      font-weight: 800;
-    }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--dark-brown);
+  }
 
-    .day-header .date {
-      font-size: 13px;
-      opacity: 0.85;
-      font-weight: 400;
-    }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
 
-    .day-header.weekend {
-      background: linear-gradient(135deg, #3C2415, #5a3620);
-    }
+  /* ── GRID ── */
+  .grid-container {
+    padding: 20px 16px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-    .day-body {
-      padding: 14px 0 10px;
-    }
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
 
-    .item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 8px 16px;
-      border-bottom: 1px solid #FAF3EA;
-      transition: background 0.15s;
-    }
+  /* ── DAY CARD ── */
+  .day-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(60,36,21,0.08);
+    display: flex;
+    flex-direction: column;
+  }
 
-    .item:last-child {
-      border-bottom: none;
-    }
+  .day-header {
+    padding: 10px 10px 8px;
+    text-align: center;
+    color: #fff;
+  }
 
-    .item:hover {
-      background: #FAF3EA;
-    }
+  .day-header.weekday { background-color: var(--terra-deep); }
+  .day-header.saturday { background-color: var(--terra-light); }
+  .day-header.sunday { background-color: #A0522D; }
 
-    .item-time {
-      font-size: 11.5px;
-      color: #C4763A;
-      font-weight: 700;
-      white-space: nowrap;
-      min-width: 80px;
-      padding-top: 2px;
-      letter-spacing: 0.3px;
-    }
+  .day-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
 
-    .item-content {
-      flex: 1;
-    }
+  .day-date {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
 
-    .item-title {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: #3C2415;
-      line-height: 1.4;
-    }
+  .day-body {
+    padding: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: var(--cream);
+  }
 
-    .item-note {
-      font-size: 11.5px;
-      color: #9a7a6a;
-      margin-top: 2px;
-      line-height: 1.4;
-    }
+  /* ── EVENT CARD ── */
+  .event {
+    border-radius: 7px;
+    padding: 7px 9px;
+    font-size: 11px;
+    line-height: 1.45;
+    border-left: 3px solid transparent;
+  }
 
-    .tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 20px;
-      margin-right: 4px;
-      margin-bottom: 3px;
-      letter-spacing: 0.3px;
-    }
+  .event-time {
+    font-weight: 700;
+    font-size: 10px;
+    margin-bottom: 2px;
+    opacity: 0.75;
+  }
 
-    .tag-routine   { background: #F5EBE0; color: #C4763A; border: 1px solid #e0cfc0; }
-    .tag-reading   { background: #fef7ef; color: #b05e2a; border: 1px solid #f0d4bb; }
-    .tag-note      { background: #fff4f0; color: #9a3e20; border: 1px solid #f5c8b5; }
-    .tag-discussion{ background: #f5f0ff; color: #5a3b8a; border: 1px solid #cbb8ef; }
-    .tag-event     { background: #eef6f0; color: #2e7a4a; border: 1px solid #aed6bb; }
-    .tag-promo     { background: #fdf2e0; color: #9a6200; border: 1px solid #f0d999; }
-    .tag-prep      { background: #e8f4fb; color: #1a6a9a; border: 1px solid #a8d4ef; }
-    .tag-deadline  { background: #fde8e8; color: #9a1c1c; border: 1px solid #f5b3b3; }
+  .event-title {
+    font-weight: 600;
+    font-size: 11.5px;
+  }
 
-    .section-label {
-      font-size: 10.5px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #C8845A;
-      font-weight: 700;
-      padding: 8px 16px 2px;
-    }
+  .event-note {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 1px;
+  }
 
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, #F5EBE0, #e8d8c8, #F5EBE0);
-      margin: 4px 16px;
-    }
+  /* categories */
+  .ev-routine   { background: var(--routine-bg);    border-left-color: var(--routine); }
+  .ev-fixed     { background: var(--fixed-bg);      border-left-color: var(--fixed); }
+  .ev-reading   { background: var(--reading-bg);    border-left-color: var(--reading); }
+  .ev-discuss   { background: var(--discussion-bg); border-left-color: var(--discussion); }
+  .ev-promo     { background: var(--promo-bg);      border-left-color: var(--promo); }
+  .ev-prep      { background: var(--prep-bg);       border-left-color: var(--prep); }
 
-    footer {
-      text-align: center;
-      margin-top: 36px;
-      padding: 18px;
-      font-size: 12px;
-      color: #C8845A;
-      border-top: 1px solid #F5EBE0;
-      letter-spacing: 1px;
-    }
+  .ev-routine   .event-time,
+  .ev-routine   .event-title { color: var(--routine); }
+  .ev-fixed     .event-time,
+  .ev-fixed     .event-title { color: var(--fixed); }
+  .ev-reading   .event-time,
+  .ev-reading   .event-title { color: var(--reading); }
+  .ev-discuss   .event-time,
+  .ev-discuss   .event-title { color: var(--discussion); }
+  .ev-promo     .event-time,
+  .ev-promo     .event-title { color: var(--promo); }
+  .ev-prep      .event-time,
+  .ev-prep      .event-title { color: var(--prep); }
 
-    @media (max-width: 640px) {
-      body { padding: 12px; }
-      .week-grid { grid-template-columns: 1fr; gap: 14px; }
-      header { padding: 24px 16px 20px; }
-      .item-time { min-width: 68px; font-size: 11px; }
-      .item-title { font-size: 13px; }
-    }
+  /* ── FOOTER ── */
+  footer {
+    background-color: var(--dark-brown);
+    color: var(--cream);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 
-    @media (min-width: 641px) and (max-width: 960px) {
-      .week-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+  .footer-left  { font-weight: 700; letter-spacing: 1px; }
+  .footer-mid   { opacity: 0.7; letter-spacing: 0.5px; text-align: center; }
+  .footer-right { opacity: 0.55; font-size: 11px; letter-spacing: 0.5px; }
 
-    @media (min-width: 961px) {
-      .week-grid { grid-template-columns: repeat(3, 1fr); }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .days-grid {
+      grid-template-columns: repeat(4, 1fr);
     }
-  </style>
+  }
+
+  @media (max-width: 600px) {
+    .days-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    header { padding: 20px 16px 16px; }
+    .grid-container { padding: 14px 10px 24px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 360px) {
+    .days-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
+<!-- ══════════════ HEADER ══════════════ -->
 <header>
-  <div class="brand">포근나루 · Pogeunnaru</div>
-  <h1>📋 2026년 6월 3주차 계획표</h1>
-  <div class="subtitle">06월 15일(월) — 06월 21일(일) &nbsp;·&nbsp; 대표 이다현</div>
+  <div class="brand">POGNARU x Claude</div>
+  <div class="header-title">2026년 6월 3주차 계획표</div>
+  <div class="header-sub">2026-W25 &nbsp;·&nbsp; 06월 15일 (월) — 06월 21일 (일)</div>
 </header>
 
-<div class="week-grid">
-
-  <!-- ────────────────────────────── 월요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header">
-      <span class="weekday">월</span>
-      <span class="date">06월 15일</span>
+<!-- ══════════════ LEGEND ══════════════ -->
+<div class="legend-wrap">
+  <div class="legend-title">Legend</div>
+  <div class="legend-items">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--routine)"></div>
+      <span>루틴</span>
     </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">05:50–06:25</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">줌라이팅</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">06:30–06:45</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">원서 읽기</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-deadline">마감 예비</span>
-          <div class="item-title">고백록 서평 작성 마감</div>
-          <div class="item-note">오늘 당일 마감 — 오전 중 집중 완료</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-reading">독서</span>
-          <div class="item-title">돈키호테 2권 15~29장 읽기 시작</div>
-          <div class="item-note">화요일(6/16) 마감 대비 — 오늘부터 진행</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">오후 / 저녁</div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-promo">홍보</span>
-          <div class="item-title">선릿모닝 홍보 시작</div>
-          <div class="item-note">SNS / 채널 홍보 개시</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-prep">준비</span>
-          <div class="item-title">햇살 고전클래스 도서 마음 읽기 시작</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-prep">준비</span>
-          <div class="item-title">나쓰메 소세키 클래스 소개글 작성 시작</div>
-        </div>
-      </div>
-
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--fixed)"></div>
+      <span>고정 일정</span>
     </div>
-  </div>
-
-  <!-- ────────────────────────────── 화요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header">
-      <span class="weekday">화</span>
-      <span class="date">06월 16일</span>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--reading)"></div>
+      <span>독서 마감</span>
     </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">05:50–06:25</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">줌라이팅</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">06:30–06:45</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">원서 읽기</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-deadline">마감</span>
-          <div class="item-title">돈키호테 2권 15~29장 완독</div>
-          <div class="item-note">오늘 마감 — 오전 중 마무리</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-note">독서노트</span>
-          <div class="item-title">돈키호테 독서노트 작성 시작</div>
-          <div class="item-note">수요일(6/17) 11시 마감 대비 — 오늘부터 초안</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">저녁</div>
-
-      <div class="item">
-        <div class="item-time">20:00–22:00</div>
-        <div class="item-content">
-          <span class="tag tag-discussion">토론</span>
-          <div class="item-title">고백록 줌 토론</div>
-          <div class="item-note">온라인 참여</div>
-        </div>
-      </div>
-
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--discussion)"></div>
+      <span>독서 토론</span>
     </div>
-  </div>
-
-  <!-- ────────────────────────────── 수요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header">
-      <span class="weekday">수</span>
-      <span class="date">06월 17일</span>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--promo)"></div>
+      <span>홍보</span>
     </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">05:50–06:25</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">줌라이팅</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">06:30–06:45</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">원서 읽기</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">~11:00</div>
-        <div class="item-content">
-          <span class="tag tag-note">독서노트 마감</span>
-          <div class="item-title">돈키호테 독서노트 제출</div>
-          <div class="item-note">오전 11시 이전 마감</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-reading">독서</span>
-          <div class="item-title">이탈리아 르네상스 6부 읽기 시작</div>
-          <div class="item-note">목요일(6/18) 마감 대비</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">10:40–11:40</div>
-        <div class="item-content">
-          <span class="tag tag-event">정기</span>
-          <div class="item-title">레지오 모임</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">저녁</div>
-
-      <div class="item">
-        <div class="item-time">20:00–22:00</div>
-        <div class="item-content">
-          <span class="tag tag-discussion">토론</span>
-          <div class="item-title">돈키호테 줌 토론</div>
-          <div class="item-note">온라인 참여</div>
-        </div>
-      </div>
-
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--prep)"></div>
+      <span>준비 작업</span>
     </div>
-  </div>
-
-  <!-- ────────────────────────────── 목요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header">
-      <span class="weekday">목</span>
-      <span class="date">06월 18일</span>
-    </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">05:50–06:25</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">줌라이팅</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">06:30–06:45</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">원서 읽기</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-deadline">마감</span>
-          <div class="item-title">이탈리아 르네상스 6부 완독</div>
-          <div class="item-note">오늘 마감</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">~11:00</div>
-        <div class="item-content">
-          <span class="tag tag-note">독서노트 마감</span>
-          <div class="item-title">이탈리아 르네상스 독서노트 제출</div>
-          <div class="item-note">오전 11시 이전 마감</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-reading">독서</span>
-          <div class="item-title">엥케이리디온 단편 89~121쪽 읽기 시작</div>
-          <div class="item-note">일요일(6/21) 마감 대비 — 여유 있게 시작</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">저녁</div>
-
-      <div class="item">
-        <div class="item-time">20:00–22:00</div>
-        <div class="item-content">
-          <span class="tag tag-discussion">토론</span>
-          <div class="item-title">이탈리아 르네상스 줌 토론</div>
-          <div class="item-note">온라인 참여</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">22:00–23:30</div>
-        <div class="item-content">
-          <span class="tag tag-event">미팅</span>
-          <div class="item-title">디퍼 언브랜딩 줌 미팅</div>
-          <div class="item-note">⚠ 이번 주 22:00 시작으로 변경</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ────────────────────────────── 금요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header">
-      <span class="weekday">금</span>
-      <span class="date">06월 19일</span>
-    </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">05:50–06:25</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">줌라이팅</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">06:30–06:45</div>
-        <div class="item-content">
-          <span class="tag tag-routine">루틴</span>
-          <div class="item-title">원서 읽기</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">10:00–10:40</div>
-        <div class="item-content">
-          <span class="tag tag-event">정기</span>
-          <div class="item-title">오전 미사</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">10:40–12:10</div>
-        <div class="item-content">
-          <span class="tag tag-event">정기</span>
-          <div class="item-title">마르코 성경공부</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-reading">독서</span>
-          <div class="item-title">엥케이리디온 단편 89~121쪽 계속</div>
-          <div class="item-note">일요일 마감 대비 — 오늘 절반 이상 목표</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">저녁</div>
-
-      <div class="item">
-        <div class="item-time">20:10~</div>
-        <div class="item-content">
-          <span class="tag tag-event">행사</span>
-          <div class="item-title">꾸리아 사업보고</div>
-          <div class="item-note">이동 여유 시간 확보 필요</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ────────────────────────────── 토요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header weekend">
-      <span class="weekday">토</span>
-      <span class="date">06월 20일</span>
-    </div>
-    <div class="day-body">
-
-      <div class="section-label">오전 / 점심</div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-reading">독서</span>
-          <div class="item-title">엥케이리디온 단편 89~121쪽 마무리</div>
-          <div class="item-note">일요일(6/21) 마감 대비 — 오늘 완독 권장</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-note">독서노트</span>
-          <div class="item-title">엥케이리디온 독서노트 초안 작성</div>
-          <div class="item-note">일요일(6/21) 마감 대비 — 오늘 초안 완성 권장</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">오후</div>
-
-      <div class="item">
-        <div class="item-time">14:00–15:50</div>
-        <div class="item-content">
-          <span class="tag tag-event">정기</span>
-          <div class="item-title">자모회</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">16:00–17:00</div>
-        <div class="item-content">
-          <span class="tag tag-event">정기</span>
-          <div class="item-title">어린이 미사</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ────────────────────────────── 일요일 ────────────────────────────── -->
-  <div class="day-card">
-    <div class="day-header weekend">
-      <span class="weekday">일</span>
-      <span class="date">06월 21일</span>
-    </div>
-    <div class="day-body">
-
-      <div class="section-label">오전</div>
-
-      <div class="item">
-        <div class="item-time">~11:00</div>
-        <div class="item-content">
-          <span class="tag tag-note">독서노트 마감</span>
-          <div class="item-title">엥케이리디온 독서노트 최종 제출</div>
-          <div class="item-note">오전 11시 이전 마감</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">오전 중</div>
-        <div class="item-content">
-          <span class="tag tag-deadline">마감</span>
-          <div class="item-title">엥케이리디온 단편 89~121쪽 완독 확인</div>
-          <div class="item-note">토요일에 완료 목표, 오늘 재확인</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-      <div class="section-label">오후 / 저녁</div>
-
-      <div class="item">
-        <div class="item-time">오후 중</div>
-        <div class="item-content">
-          <span class="tag tag-prep">준비</span>
-          <div class="item-title">다음 주 준비 · 여유 시간</div>
-          <div class="item-note">이동/휴식 · 다음 주 독서 범위 파악</div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="item-time">20:00–22:00</div>
-        <div class="item-content">
-          <span class="tag tag-discussion">토론</span>
-          <div class="item-title">엥케이리디온 단편 줌 토론</div>
-          <div class="item-note">온라인 참여</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-<!-- 범례 -->
-<div style="
-  margin-top: 32px;
-  background: #FFFFFF;
-  border-radius: 16px;
-  padding: 20px 22px;
-  border: 1px solid #F5EBE0;
-  box-shadow: 0 3px 14px rgba(60,36,21,0.06);
-">
-  <div style="font-size:12px; font-weight:700; letter-spacing:2px; color:#C8845A; margin-bottom:12px; text-transform:uppercase;">태그 범례</div>
-  <div style="display:flex; flex-wrap:wrap; gap:8px;">
-    <span class="tag tag-routine">루틴</span>
-    <span class="tag tag-reading">독서</span>
-    <span class="tag tag-note">독서노트</span>
-    <span class="tag tag-discussion">토론</span>
-    <span class="tag tag-event">정기·행사</span>
-    <span class="tag tag-promo">홍보</span>
-    <span class="tag tag-prep">준비</span>
-    <span class="tag tag-deadline">마감</span>
   </div>
 </div>
 
-<!-- 메모 -->
-<div style="
-  margin-top: 16px;
-  background: #F5EBE0;
-  border-radius: 16px;
-  padding: 18px 22px;
-  border-left: 4px solid #C4763A;
-  box-shadow: 0 2px 10px rgba(60,36,21,0.05);
-">
-  <div style="font-size:12px; font-weight:700; color:#C4763A; margin-bottom:8px; letter-spacing:1px;">📌 이번 주 주요 체크포인트</div>
-  <ul style="font-size:13px; color:#3C2415; line-height:2; padding-left:18px;">
-    <li>월 · 고백록 서평 마감 + 선릿모닝 홍보 시작</li>
-    <li>화 · 돈키호테 완독 마감 + 고백록 줌 토론 (20:00)</li>
-    <li>수 · 돈키호테 독서노트 <strong>11시 이전</strong> + 돈키호테 줌 토론 (20:00)</li>
-    <li>목 · 르네상스 완독·노트 마감 + 토론(20:00) + 디퍼 미팅 <strong>22:00</strong>으로 변경</li>
-    <li>금 · 오전 미사·성경공부 + 꾸리아 사업보고 (20:10)</li>
-    <li>토 · 엥케이리디온 완독·노트 초안 + 자모회·어린이 미사</li>
-    <li>일 · 엥케이리디온 노트 <strong>11시 이전</strong> + 줌 토론 (20:
+<!-- ══════════════ GRID ══════════════ -->
+<div class="grid-container">
+  <div class="days-grid">
+
+    <!-- ── MON 06/15 ── -->
+    <div class="day-card">
+      <div class="day-header weekday">
+        <div class="day-name">MON</div>
+        <div class="day-date">06 / 15</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-routine">
+          <div class="event-time">05:50 – 06:25</div>
+          <div class="event-title">☀️ 줌라이팅</div>
+        </div>
+
+        <div class="event ev-routine">
+          <div class="event-time">06:30 – 06:45</div>
+          <div class="event-title">📖 원서 읽기</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오전 중</div>
+          <div class="event-title">✍️ 고백록 서평 작성 마감</div>
+          <div class="event-note">오늘까지 완료</div>
+        </div>
+
+        <div class="event ev-promo">
+          <div class="event-time">오전 중</div>
+          <div class="event-title">📣 선릿모닝 홍보 시작</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📚 돈키호테 2권 15~29장 읽기 시작</div>
+          <div class="event-note">화요일 마감 대비 — 미리 시작</div>
+        </div>
+
+        <div class="event ev-prep">
+          <div class="event-time">오후 여유</div>
+          <div class="event-title">🌿 햇살 고전클래스 도서 마음 읽기 시작</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TUE 06/16 ── -->
+    <div class="day-card">
+      <div class="day-header weekday">
+        <div class="day-name">TUE</div>
+        <div class="day-date">06 / 16</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-routine">
+          <div class="event-time">05:50 – 06:25</div>
+          <div class="event-title">☀️ 줌라이팅</div>
+        </div>
+
+        <div class="event ev-routine">
+          <div class="event-time">06:30 – 06:45</div>
+          <div class="event-title">📖 원서 읽기</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오전 중</div>
+          <div class="event-title">📚 돈키호테 2권 15~29장 마감</div>
+          <div class="event-note">오늘까지 완료</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📝 돈키호테 독서노트 초안 작성</div>
+          <div class="event-note">수요일 11시 전 마감 대비</div>
+        </div>
+
+        <div class="event ev-prep">
+          <div class="event-time">오후 여유</div>
+          <div class="event-title">✏️ 나쓰메 소세키 클래스 소개글 작성 시작</div>
+        </div>
+
+        <div class="event ev-discuss">
+          <div class="event-time">20:00 – 22:00</div>
+          <div class="event-title">💬 고백록 줌 토론</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── WED 06/17 ── -->
+    <div class="day-card">
+      <div class="day-header weekday">
+        <div class="day-name">WED</div>
+        <div class="day-date">06 / 17</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-routine">
+          <div class="event-time">05:50 – 06:25</div>
+          <div class="event-title">☀️ 줌라이팅</div>
+        </div>
+
+        <div class="event ev-routine">
+          <div class="event-time">06:30 – 06:45</div>
+          <div class="event-title">📖 원서 읽기</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">~ 11:00</div>
+          <div class="event-title">📝 돈키호테 독서노트 마감</div>
+          <div class="event-note">오전 11시 이전까지</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">10:40 – 11:40</div>
+          <div class="event-title">⛪ 레지오</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📚 이탈리아 르네상스 6부 읽기 시작</div>
+          <div class="event-note">목요일 마감 대비 — 미리 시작</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📝 이탈리아 르네상스 독서노트 초안</div>
+          <div class="event-note">목요일 11시 전 마감 대비</div>
+        </div>
+
+        <div class="event ev-discuss">
+          <div class="event-time">20:00 – 22:00</div>
+          <div class="event-title">💬 돈키호테 줌 토론</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── THU 06/18 ── -->
+    <div class="day-card">
+      <div class="day-header weekday">
+        <div class="day-name">THU</div>
+        <div class="day-date">06 / 18</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-routine">
+          <div class="event-time">05:50 – 06:25</div>
+          <div class="event-title">☀️ 줌라이팅</div>
+        </div>
+
+        <div class="event ev-routine">
+          <div class="event-time">06:30 – 06:45</div>
+          <div class="event-time">📖 원서 읽기</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">~ 11:00</div>
+          <div class="event-title">📝 이탈리아 르네상스 독서노트 마감</div>
+          <div class="event-note">오전 11시 이전까지</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오전 중</div>
+          <div class="event-title">📚 이탈리아 르네상스 6부 마감</div>
+          <div class="event-note">오늘까지 완료</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📚 엥케이리디온 89~121쪽 읽기 시작</div>
+          <div class="event-note">일요일 마감 대비 — 미리 시작</div>
+        </div>
+
+        <div class="event ev-discuss">
+          <div class="event-time">20:00 – 22:00</div>
+          <div class="event-title">💬 이탈리아 르네상스 줌 토론</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">22:00 – 23:30</div>
+          <div class="event-title">🔗 디퍼 언브랜딩 줌 미팅</div>
+          <div class="event-note">이번 주 22시로 변경</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── FRI 06/19 ── -->
+    <div class="day-card">
+      <div class="day-header weekday">
+        <div class="day-name">FRI</div>
+        <div class="day-date">06 / 19</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-routine">
+          <div class="event-time">05:50 – 06:25</div>
+          <div class="event-title">☀️ 줌라이팅</div>
+        </div>
+
+        <div class="event ev-routine">
+          <div class="event-time">06:30 – 06:45</div>
+          <div class="event-title">📖 원서 읽기</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">10:00 – 10:40</div>
+          <div class="event-title">⛪ 오전 미사</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">10:40 – 12:10</div>
+          <div class="event-title">📖 마르코 성경공부</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📚 엥케이리디온 계속 읽기</div>
+          <div class="event-note">일요일 마감 대비 진도 유지</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오후 중</div>
+          <div class="event-title">📝 엥케이리디온 독서노트 초안</div>
+          <div class="event-note">일요일 11시 전 마감 대비</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">20:10</div>
+          <div class="event-title">📋 꾸리아 사업보고</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SAT 06/20 ── -->
+    <div class="day-card">
+      <div class="day-header saturday">
+        <div class="day-name">SAT</div>
+        <div class="day-date">06 / 20</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-fixed">
+          <div class="event-time">14:00 – 15:50</div>
+          <div class="event-title">👨‍👩‍👧 자모회</div>
+        </div>
+
+        <div class="event ev-fixed">
+          <div class="event-time">16:00 – 17:00</div>
+          <div class="event-title">⛪ 어린이 미사</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오전 또는 저녁</div>
+          <div class="event-title">📚 엥케이리디온 89~121쪽 마무리</div>
+          <div class="event-note">일요일 마감 전 완료 권장</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SUN 06/21 ── -->
+    <div class="day-card">
+      <div class="day-header sunday">
+        <div class="day-name">SUN</div>
+        <div class="day-date">06 / 21</div>
+      </div>
+      <div class="day-body">
+
+        <div class="event ev-reading">
+          <div class="event-time">~ 11:00</div>
+          <div class="event-title">📝 엥케이리디온 독서노트 마감</div>
+          <div class="event-note">오전 11시 이전까지</div>
+        </div>
+
+        <div class="event ev-reading">
+          <div class="event-time">오전 중</div>
+          <div class="event-title">📚 엥케이리디온 단편 89~121쪽 마감</div>
+          <div class="event-note">오늘까지 완료</div>
+        </div>
+
+        <div class="event ev-discuss">
+          <div class="event-time">20:00 – 22:00</div>
+          <div class="event-title">💬 엥케이리디온 줌 토론</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /days-grid -->
+</div><!-- /grid-container -->
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-left">햇살</div>
+  <div class="footer-mid">2026-W25 &nbsp;주간 계획표</div>
+  <div class="footer-right">Generated by 가비 ✦ 2026.06.15</div>
+</footer>
+
+</body>
+</html>
+```
