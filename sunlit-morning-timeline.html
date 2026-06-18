@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>선릿모닝 1기 홍보 타임라인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Dodum&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF3EA;
+    --apricot:#F5EBE0;
+    --terra:#C8845A;
+    --terra-soft:#E7C3A6;
+    --brown:#3C2415;
+    --line:rgba(60,36,21,.12);
+    --muted:#8a7866;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--brown);
+    font-family:'Gowun Dodum',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:480px;margin:0 auto;padding:0 18px;}
+
+  /* ===== 헤더 ===== */
+  header{
+    background:var(--brown);
+    color:var(--cream);
+    padding:34px 18px 26px;
+    text-align:center;
+    border-radius:0 0 22px 22px;
+  }
+  header .eyebrow{
+    font-size:12px;letter-spacing:6px;color:var(--terra-soft);
+    margin-bottom:10px;
+  }
+  header h1{
+    font-family:'Nanum Myeongjo',serif;
+    font-size:24px;font-weight:800;letter-spacing:-.3px;
+    line-height:1.35;
+  }
+  header .meta{
+    margin-top:14px;font-size:13px;color:var(--apricot);
+    line-height:1.8;opacity:.92;
+  }
+  header .meta b{color:#fff;font-weight:700;}
+
+  /* ===== 원칙 박스 ===== */
+  .note{
+    background:var(--apricot);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    font-size:13px;color:var(--brown);
+    margin:20px 0 8px;
+    line-height:1.7;
+  }
+  .note b{color:var(--terra);font-weight:700;}
+
+  /* ===== 섹션 타이틀 ===== */
+  .sec-h{
+    font-family:'Nanum Myeongjo',serif;
+    font-size:17px;font-weight:700;
+    margin:30px 0 14px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .sec-h::before{
+    content:"";width:18px;height:2px;background:var(--terra);
+    display:inline-block;
+  }
+
+  /* ===== 타임라인 ===== */
+  .day{
+    position:relative;
+    padding:14px 0 14px 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .day:last-child{border-bottom:none;}
+  .day .dnum{
+    position:absolute;left:0;top:16px;
+    width:50px;text-align:center;
+  }
+  .day .dnum .dd{
+    font-family:'Cormorant Garamond',serif;
+    font-size:13px;font-weight:600;
+    color:var(--terra);letter-spacing:.5px;
+    background:var(--apricot);
+    border:1px solid var(--terra-soft);
+    border-radius:20px;padding:2px 0;display:block;
+  }
+  .day .dnum .date{
+    font-size:13px;font-weight:700;margin-top:6px;color:var(--brown);
+  }
+  .day .dnum .dow{font-size:11px;color:var(--muted);}
+  .day.dday .dnum .dd{background:var(--brown);color:#fff;border-color:var(--brown);}
+  .day.open .dnum .dd{background:var(--terra);color:#fff;border-color:var(--terra);}
+
+  .item{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:11px 13px;
+    margin-bottom:8px;
+  }
+  .item:last-child{margin-bottom:0;}
+  .item .top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px;}
+  .chip{
+    font-size:11px;font-weight:700;letter-spacing:.3px;
+    padding:2px 9px;border-radius:20px;white-space:nowrap;
+  }
+  .ch-insta{background:#fce4ec;color:#b03a6a;}
+  .ch-story{background:#f3e5f5;color:#7b4a93;}
+  .ch-blog{background:#e3f0e1;color:#3d7a3d;}
+  .ch-kakao{background:#fff3c4;color:#9a7b00;}
+  .ch-reels{background:#e8eaf6;color:#4a53a8;}
+
+  .goal{
+    font-size:10px;font-weight:700;letter-spacing:.5px;
+    padding:2px 8px;border-radius:6px;margin-left:auto;
+  }
+  .g-reach{background:var(--apricot);color:var(--muted);}
+  .g-persuade{background:#f0dcc8;color:var(--terra);}
+  .g-convert{background:var(--brown);color:var(--cream);}
+  .g-ops{background:#e6e1d8;color:#6b5d4a;}
+
+  .item .body{font-size:13.5px;color:#43352a;line-height:1.55;}
+  .item .body b{color:var(--terra);font-weight:700;}
+  .item .tag-new{
+    display:inline-block;margin-top:6px;
+    font-size:11px;font-weight:700;color:#fff;background:var(--terra);
+    padding:1px 8px;border-radius:6px;
+  }
+  .item .tag-opt{
+    display:inline-block;margin-top:6px;
+    font-size:11px;font-weight:700;color:var(--muted);
+    border:1px dashed var(--muted);
+    padding:1px 8px;border-radius:6px;
+  }
+
+  /* ===== 흐름 ===== */
+  .flow{
+    background:var(--brown);color:var(--cream);
+    border-radius:14px;padding:16px 16px 14px;
+    font-size:12.5px;line-height:1.95;
+  }
+  .flow .row{display:flex;gap:10px;}
+  .flow .k{color:var(--terra-soft);font-family:'Cormorant Garamond',serif;
+    font-weight:600;flex:0 0 78px;}
+  .flow .v{color:var(--apricot);}
+  .flow .punch{
+    margin-top:12px;padding-top:12px;border-top:1px solid rgba(245,235,224,.2);
+    font-size:12.5px;color:#fff;line-height:1.7;
+  }
+  .flow .punch b{color:var(--terra-soft);}
+
+  /* ===== 채널 전략 ===== */
+  .strat{
+    background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:13px 15px;margin-bottom:10px;
+  }
+  .strat h3{
+    font-family:'Nanum Myeongjo',serif;font-size:14px;font-weight:700;
+    color:var(--terra);margin-bottom:6px;
+  }
+  .strat p{font-size:12.5px;color:#43352a;line-height:1.65;}
+
+  /* ===== 체력 ===== */
+  .care{
+    background:var(--apricot);border:1px solid var(--line);
+    border-radius:14px;padding:14px 16px;
+  }
+  .care li{
+    list-style:none;font-size:13px;line-height:1.7;
+    padding-left:18px;position:relative;margin-bottom:7px;color:#43352a;
+  }
+  .care li:last-child{margin-bottom:0;}
+  .care li::before{content:"🌿";position:absolute;left:0;font-size:11px;top:2px;}
+  .care li b{color:var(--terra);font-weight:700;}
+
+  footer{
+    text-align:center;font-size:11px;color:var(--muted);
+    letter-spacing:4px;margin-top:30px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">POGNARU STUDIO</div>
+  <h1>선릿모닝 1기<br>홍보 타임라인</h1>
+  <div class="meta">
+    모집 <b>6/18(목) ~ 6/28(일)</b> · 약 10일<br>
+    개강 <b>7/1(수)</b> · 월–금 새벽 5:50–6:20 Zoom
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note">
+    원칙 — 새로 만들 건 <b>블로그 글 1편(6/19)</b>뿐. 나머지는 모두 보유 자료 재배치.
+    앞은 <b>도달·설득</b>(인스타+블로그), 뒤로 갈수록 <b>전환</b>(카카오+스토리).
+  </div>
+
+  <!-- ===== 타임라인 ===== -->
+  <div class="sec-h">날짜별 타임라인</div>
+
+  <div class="day open">
+    <div class="dnum"><span class="dd">D-10</span><div class="date">6/18</div><div class="dow">목 · 오늘</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-insta">인스타</span><span class="goal g-convert">전환</span></div>
+      <div class="body"><b>5컷 카드뉴스(캐러셀)</b> — 모집 오픈 본 공지</div>
+    </div>
+    <div class="item">
+      <div class="top"><span class="chip ch-kakao">카카오</span><span class="goal g-convert">전환</span></div>
+      <div class="body"><b>오픈 알림 1회</b> — 캐러셀 링크 + 신청 안내</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-9</span><div class="date">6/19</div><div class="dow">금</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-blog">블로그</span><span class="goal g-persuade">설득</span></div>
+      <div class="body"><b>깊은 글 1편</b> — 선릿모닝 소개 + 세 근거(사회적 촉진·진척 공유·쾰러) + 신청 안내 + 카드 이미지
+        <span class="tag-new">신규 제작</span></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-8</span><div class="date">6/20</div><div class="dow">토</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-insta">인스타</span><span class="goal g-persuade">설득</span></div>
+      <div class="body">인용카드 ① <b>사회적 촉진</b> (트리플렛 1898) — 피드</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-7</span><div class="date">6/21</div><div class="dow">일</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-reach">도달</span></div>
+      <div class="body">블로그 글 링크 공유 + 감성 인용카드(“혼자여도 줌을 켠다”)</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-6</span><div class="date">6/22</div><div class="dow">월</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-insta">인스타</span><span class="goal g-persuade">설득</span></div>
+      <div class="body">인용카드 ② <b>진척 공유의 힘</b> (하킨 메타분석 2016) — 피드</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-5</span><div class="date">6/23</div><div class="dow">화</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-reach">도달</span></div>
+      <div class="body">감성 인용카드 재노출 + “이번 주 마감” 텍스트</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-4</span><div class="date">6/24</div><div class="dow">수</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-insta">인스타</span><span class="goal g-persuade">설득</span></div>
+      <div class="body">인용카드 ③ <b>쾰러 효과</b> (1926) — 피드</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-3</span><div class="date">6/25</div><div class="dow">목</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-convert">전환</span></div>
+      <div class="body">5컷 중 <b>JOIN US 컷 단독 재노출</b> — 신청 방법 강조</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-2</span><div class="date">6/26</div><div class="dow">금</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-kakao">카카오</span><span class="goal g-convert">전환</span></div>
+      <div class="body"><b>마감 임박 알림 1회</b> — 신청 링크 + 카카오 문의 안내</div>
+    </div>
+    <div class="item">
+      <div class="top"><span class="chip ch-reels">릴스</span><span class="goal g-reach">도달</span></div>
+      <div class="body"><b>릴스 재노출</b> (고정/스토리 공유) — 마감 임박</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">D-1</span><div class="date">6/27</div><div class="dow">토</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-convert">전환</span></div>
+      <div class="body">“내일 마감” 카운트다운 + JOIN US 컷</div>
+    </div>
+    <div class="item">
+      <div class="top"><span class="chip ch-blog">블로그</span><span class="goal g-convert">전환</span></div>
+      <div class="body">짧은 리마인드 글 1편 — 마감 안내
+        <span class="tag-opt">선택 · 여유 있을 때만</span></div>
+    </div>
+  </div>
+
+  <div class="day dday">
+    <div class="dnum"><span class="dd">마감</span><div class="date">6/28</div><div class="dow">일</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-convert">전환</span></div>
+      <div class="body"><b>“오늘 자정 마감”</b> 최종 안내 + 신청 링크</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="dnum"><span class="dd">개강전</span><div class="date">6/30</div><div class="dow">화</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-kakao">카카오</span><span class="goal g-ops">운영</span></div>
+      <div class="body">(확정자 대상) <b>개강 안내</b> — Zoom 링크·준비물·시간</div>
+    </div>
+  </div>
+
+  <div class="day dday">
+    <div class="dnum"><span class="dd">개강</span><div class="date">7/1</div><div class="dow">수</div></div>
+    <div class="item">
+      <div class="top"><span class="chip ch-story">스토리</span><span class="goal g-reach">도달</span></div>
+      <div class="body"><b>“선릿모닝 1기 시작”</b> 인증 1컷</div>
+    </div>
+  </div>
+
+  <!-- ===== 흐름 ===== -->
+  <div class="sec-h">카운트다운 흐름</div>
+  <div class="flow">
+    <div class="row"><span class="k">D-10</span><span class="v">오픈 · 인스타 5컷 본공지 + 카카오 오픈알림</span></div>
+    <div class="row"><span class="k">D-9</span><span class="v">블로그 깊은 글 (검색 누적 시작)</span></div>
+    <div class="row"><span class="k">D-8~4</span><span class="v">근거카드 3종 + 감성카드 흩뿌리기 (저장·공유)</span></div>
+    <div class="row"><span class="k">D-3</span><span class="v">JOIN US 컷 재노출 (전환 압박)</span></div>
+    <div class="row"><span class="k">D-2</span><span class="v">카카오 마감임박 + 릴스 재노출</span></div>
+    <div class="row"><span class="k">D-1</span><span class="v">스토리 카운트다운 (+선택 블로그)</span></div>
+    <div class="row"><span class="k">D-DAY</span><span class="v">스토리 최종 마감 안내</span></div>
+    <div class="row"><span class="k">개강전</span><span class="v">카카오 개강 안내 (확정자)</span></div>
+    <div class="row"><span class="k">개강</span><span class="v">인스타 시작 인증</span></div>
+    <div class="punch">핵심 — 앞은 <b>인스타+블로그(도달·설득)</b>, 뒤로 갈수록 <b>카카오+스토리(전환)</b>로 무게가 이동.</div>
+  </div>
+
+  <!-- ===== 채널 전략 ===== -->
+  <div class="sec-h">채널별 전략</div>
+
+  <div class="strat">
+    <h3>인스타그램 · 메인 무대</h3>
+    <p>5컷 캐러셀을 6/18 오픈 본 공지로 못 박는다. 근거 인용카드 3종을 6/20·22·24 이틀 간격으로 피드에 흩뿌려 저장·공유를 유도하고, 감성 카드는 스토리로 정서 후킹. 마감 임박(6/26) 릴스 재노출로 도달을 끌어올리고, 마지막 사흘은 JOIN US 컷과 카운트다운으로 전환에 집중.</p>
+  </div>
+
+  <div class="strat">
+    <h3>네이버 블로그 · 검색 허브</h3>
+    <p>검색 누적 시간을 벌려고 6/19에 깊은 글 1편. 소개 + 세 근거 + 신청 안내 + 카드 이미지로 한 페이지에서 설득이 끝나게. 인스타·카카오에서 링크로 계속 재활용되는 허브. 6/27 리마인드 글은 체력 여유가 있을 때만(선택).</p>
+  </div>
+
+  <div class="strat">
+    <h3>카카오채널 · 전환율 최고, 푸시 절제</h3>
+    <p>차단 위험 때문에 푸시는 6/18 오픈 + 6/26 D-2, 단 두 번만. 문의 창구가 카카오 단독이라 두 발송 모두 “문의는 여기로”를 함께 넣는다. 6/30 개강 안내는 확정자 대상 운영 메시지라 빈도 계산에서 제외.</p>
+  </div>
+
+  <div class="strat">
+    <h3>유튜브 · 릴스 (보조)</h3>
+    <p>이미 게시된 릴스는 새로 만들지 않고, 6/26 마감 임박에 인스타 재노출용으로만 재활용.</p>
+  </div>
+
+  <!-- ===== 체력 ===== -->
+  <div class="sec-h">체력 보호 장치</div>
+  <ul class="care">
+    <li><b>새벽 5:50–6:20</b> — 선릿모닝 진행 시간, 발행·작업 배치 금지</li>
+    <li><b>오후 9시 이후</b> — 모든 게시·발송은 낮~저녁에</li>
+    <li>신규 제작은 <b>블로그 글 1편(6/19)</b>만. 6/27 리마인드는 선택</li>
+    <li>인스타 근거카드는 <b>격일 배치</b>로 매일 올리는 부담 제거</li>
+    <li>카카오 푸시 <b>2회로 절제</b> — 차단 위험·부담 동시 관리</li>
+  </ul>
+
+  <footer>POGNARU STUDIO · 가비</footer>
+
+</div>
+</body>
+</html>
