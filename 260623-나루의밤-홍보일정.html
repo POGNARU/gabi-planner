@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나루의 밤 3Q 홍보 일정 | 포근나루</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #FAF3EA;
+      color: #3C2415;
+      font-family: 'Nanum Myeongjo', 'Georgia', serif;
+      padding: 24px 16px 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    header {
+      background-color: #3C2415;
+      color: #FAF3EA;
+      border-radius: 12px;
+      padding: 28px 24px 22px;
+      margin-bottom: 28px;
+    }
+
+    header .label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #C8845A;
+      margin-bottom: 8px;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: normal;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    header .meta {
+      font-size: 13px;
+      color: #F5EBE0;
+      opacity: 0.8;
+      font-family: 'Gowun Dodum', sans-serif;
+      line-height: 1.8;
+    }
+
+    header .meta a {
+      color: #C8845A;
+      text-decoration: none;
+    }
+
+    /* 카드 범례 */
+    .card-legend {
+      background: #F5EBE0;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+    }
+
+    .card-legend h2 {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #C8845A;
+      margin-bottom: 12px;
+      font-family: 'Gowun Dodum', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-family: 'Gowun Dodum', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-1 { background: #C8845A; color: #FAF3EA; }
+    .badge-2 { background: #a06a42; color: #FAF3EA; }
+    .badge-3 { background: #7a4e2c; color: #FAF3EA; }
+    .badge-4 { background: #3C2415; color: #FAF3EA; }
+    .badge-feed { background: #F5EBE0; color: #3C2415; border: 1px solid #C8845A; }
+    .badge-story { background: #FAF3EA; color: #3C2415; border: 1px solid #a06a42; }
+
+    /* 일정 테이블 */
+    .schedule-section {
+      margin-bottom: 16px;
+    }
+
+    .day-card {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      border: 1px solid #F5EBE0;
+    }
+
+    .day-card.deadline {
+      border: 2px solid #C8845A;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #F5EBE0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .day-card.deadline .day-header {
+      background: #C8845A;
+      color: #FAF3EA;
+    }
+
+    .day-info {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .day-date {
+      font-size: 16px;
+      font-weight: bold;
+      color: #3C2415;
+    }
+
+    .day-card.deadline .day-date {
+      color: #FAF3EA;
+    }
+
+    .day-weekday {
+      font-size: 12px;
+      color: #7a4e2c;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .day-card.deadline .day-weekday {
+      color: #F5EBE0;
+    }
+
+    .deadline-tag {
+      background: #FAF3EA;
+      color: #C8845A;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-family: 'Gowun Dodum', sans-serif;
+      font-weight: bold;
+    }
+
+    .day-tasks {
+      padding: 12px 16px;
+    }
+
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #FAF3EA;
+    }
+
+    .task-row:last-child {
+      border-bottom: none;
+    }
+
+    .task-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: #C8845A;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .task-label {
+      flex: 1;
+      font-size: 14px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .task-label.checked {
+      text-decoration: line-through;
+      color: #a09080;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .rest-day {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #a09080;
+      font-family: 'Gowun Dodum', sans-serif;
+      font-style: italic;
+    }
+
+    /* 타임라인 요약 */
+    .summary-section {
+      margin-top: 28px;
+      background: #3C2415;
+      color: #FAF3EA;
+      border-radius: 12px;
+      padding: 22px 20px;
+    }
+
+    .summary-section h2 {
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: #C8845A;
+      margin-bottom: 14px;
+      font-family: 'Gowun Dodum', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .timeline-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .timeline-date {
+      color: #C8845A;
+      min-width: 50px;
+      flex-shrink: 0;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .timeline-desc {
+      color: #F5EBE0;
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 11px;
+      color: #a09080;
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 16px 12px 40px; }
+      header h1 { font-size: 18px; }
+      .legend-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="label">포근나루 · 홍보 일정표</div>
+  <h1>나루의 밤 3Q<br>나쓰메 소세키 『마음』 고전 독서 토론</h1>
+  <div class="meta">
+    홍보 기간: 2026. 6. 23 — 7. 2 &nbsp;|&nbsp; 신청 마감: 2026. 7. 2<br>
+    채널: <a href="https://instagram.com/pognaru_studio" target="_blank">@pognaru_studio</a> &nbsp;|&nbsp;
+    신청: <a href="https://naver.me/F93A2W3r" target="_blank">naver.me/F93A2W3r</a>
+  </div>
+</header>
+
+<!-- 카드 범례 -->
+<div class="card-legend">
+  <h2>카드 구성</h2>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <span class="badge badge-1">카드 1</span>
+      <span>티저 — 나루의 밤 오픈 + 책 소개</span>
+    </div>
+    <div class="legend-item">
+      <span class="badge badge-2">카드 2</span>
+      <span>모임 방식 안내</span>
+    </div>
+    <div class="legend-item">
+      <span class="badge badge-3">카드 3</span>
+      <span>일정 · 가격 정보</span>
+    </div>
+    <div class="legend-item">
+      <span class="badge badge-4">카드 4</span>
+      <span>마감 D-3 리마인더</span>
+    </div>
+  </div>
+  <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+    <div class="legend-item"><span class="badge badge-feed">피드</span> <span>피드 게시</span></div>
+    <div class="legend-item"><span class="badge badge-story">스토리</span> <span>스토리 게시</span></div>
+  </div>
+</div>
+
+<!-- 일정 -->
+<div class="schedule-section">
+
+  <!-- 6/23 월 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 23</span>
+        <span class="day-weekday">월요일 · 오늘</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t1">
+        <div class="task-label" onclick="toggle('t1')">
+          <strong>카드 1 피드 게시</strong> — 티저 (나루의 밤 오픈 + 『마음』 소개)
+          <div class="task-meta">
+            <span class="badge badge-1">카드 1</span>
+            <span class="badge badge-feed">피드</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t2">
+        <div class="task-label" onclick="toggle('t2')">
+          스토리: 카드 1 공유 + 신청 링크 스티커 부착
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t3">
+        <div class="task-label" onclick="toggle('t3')">
+          카카오채널 '포근나루' 공지 발송 (카드 1 이미지 + 신청 링크)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6/24 화 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 24</span>
+        <span class="day-weekday">화요일</span>
+      </div>
+    </div>
+    <div class="rest-day">쉬는 날 — 게시 없음. 반응 확인·댓글 답변만.</div>
+  </div>
+
+  <!-- 6/25 수 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 25</span>
+        <span class="day-weekday">수요일</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t4">
+        <div class="task-label" onclick="toggle('t4')">
+          <strong>카드 2 피드 게시</strong> — 모임 방식 안내 (온라인/줌, 진행 방식, 분위기)
+          <div class="task-meta">
+            <span class="badge badge-2">카드 2</span>
+            <span class="badge badge-feed">피드</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t5">
+        <div class="task-label" onclick="toggle('t5')">
+          스토리: 카드 2 공유 + "어떤 분이랑 함께하고 싶어요?" 질문 스티커
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6/26 목 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 26</span>
+        <span class="day-weekday">목요일</span>
+      </div>
+    </div>
+    <div class="rest-day">쉬는 날 — 게시 없음. 댓글 답변만.</div>
+  </div>
+
+  <!-- 6/27 금 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 27</span>
+        <span class="day-weekday">금요일</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t6">
+        <div class="task-label" onclick="toggle('t6')">
+          <strong>카드 3 피드 게시</strong> — 일정·가격 정보 (날짜, 시간, 참가비, 신청 방법)
+          <div class="task-meta">
+            <span class="badge badge-3">카드 3</span>
+            <span class="badge badge-feed">피드</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t7">
+        <div class="task-label" onclick="toggle('t7')">
+          스토리: 카드 3 공유 + 신청 링크 스티커
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6/28 토 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 28</span>
+        <span class="day-weekday">토요일</span>
+      </div>
+    </div>
+    <div class="rest-day">쉬는 날 — 주말 휴식.</div>
+  </div>
+
+  <!-- 6/29 일 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 29</span>
+        <span class="day-weekday">일요일</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t8">
+        <div class="task-label" onclick="toggle('t8')">
+          스토리: 『마음』 한 문장 인용 + "마감까지 D-3" 언급
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6/30 월 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">6 / 30</span>
+        <span class="day-weekday">월요일 · D-2</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t9">
+        <div class="task-label" onclick="toggle('t9')">
+          <strong>카드 4 피드 게시</strong> — 마감 D-3 리마인더 (마감 강조 + 신청 링크 재안내)
+          <div class="task-meta">
+            <span class="badge badge-4">카드 4</span>
+            <span class="badge badge-feed">피드</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t10">
+        <div class="task-label" onclick="toggle('t10')">
+          스토리: 카드 4 공유 + 카운트다운 스티커
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t11">
+        <div class="task-label" onclick="toggle('t11')">
+          카카오채널 마감 임박 공지 발송
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7/1 화 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">7 / 1</span>
+        <span class="day-weekday">화요일 · D-1</span>
+      </div>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t12">
+        <div class="task-label" onclick="toggle('t12')">
+          스토리: "내일 마감입니다" + 신청 링크 스티커 (짧고 강하게)
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7/2 수 — 마감 -->
+  <div class="day-card deadline">
+    <div class="day-header">
+      <div class="day-info">
+        <span class="day-date">7 / 2</span>
+        <span class="day-weekday">수요일</span>
+      </div>
+      <span class="deadline-tag">신청 마감</span>
+    </div>
+    <div class="day-tasks">
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t13">
+        <div class="task-label" onclick="toggle('t13')">
+          스토리: 마감 당일 오전 — "오늘 자정 마감" + 링크 스티커
+          <div class="task-meta">
+            <span class="badge badge-story">스토리</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t14">
+        <div class="task-label" onclick="toggle('t14')">
+          신청 마감 확인 + 참가자 명단 정리
+        </div>
+      </div>
+      <div class="task-row">
+        <input type="checkbox" class="task-checkbox" id="t15">
+        <div class="task-label" onclick="toggle('t15')">
+          참가자 안내 메시지 발송 (줌 링크, 사전 독서 범위 등)
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 타임라인 요약 -->
+<div class="summary-section">
+  <h2>홍보 타임라인 요약</h2>
+  <div class="timeline-row">
+    <span class="timeline-date">6/23 월</span>
+    <span class="timeline-desc">카드 1 피드 + 스토리 + 카카오 공지 — 오픈 선언</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date">6/25 수</span>
+    <span class="timeline-desc">카드 2 피드 + 스토리 — 모임 방식 설명</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date">6/27 금</span>
+    <span class="timeline-desc">카드 3 피드 + 스토리 — 일정·가격 공개</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date">6/29 일</span>
+    <span class="timeline-desc">스토리 — 『마음』 문장 인용으로 분위기 유지</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date">6/30 월</span>
+    <span class="timeline-desc">카드 4 피드 + 스토리 + 카카오 공지 — 마감 리마인더</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date">7/1 화</span>
+    <span class="timeline-desc">스토리 — D-1 짧은 알림</span>
+  </div>
+  <div class="timeline-row">
+    <span class="timeline-date" style="color:#FAF3EA; font-weight:bold;">7/2 수</span>
+    <span class="timeline-desc" style="color:#FAF3EA; font-weight:bold;">신청 마감 — 오전 스토리 + 마감 후 참가자 안내</span>
+  </div>
+</div>
+
+<footer>
+  포근나루 · 나루의 밤 3Q &nbsp;|&nbsp; 가비 생성 2026-06-23
+</footer>
+
+<script>
+  function toggle(id) {
+    const cb = document.getElementById(id);
+    cb.checked = !cb.checked;
+    updateLabel(cb);
+    saveState();
+  }
+
+  function updateLabel(cb) {
+    const label = cb.nextElementSibling;
+    if (cb.checked) {
+      label.classList.add('checked');
+    } else {
+      label.classList.remove('checked');
+    }
+  }
+
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('.task-checkbox').forEach(cb => {
+      state[cb.id] = cb.checked;
+    });
+    localStorage.setItem('narubam3q-checklist', JSON.stringify(state));
+  }
+
+  function loadState() {
+    const saved = localStorage.getItem('narubam3q-checklist');
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    document.querySelectorAll('.task-checkbox').forEach(cb => {
+      if (state[cb.id]) {
+        cb.checked = true;
+        updateLabel(cb);
+      }
+    });
+  }
+
+  // 체크박스 직접 클릭 시 저장
+  document.querySelectorAll('.task-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+      updateLabel(cb);
+      saveState();
+    });
+  });
+
+  loadState();
+</script>
+
+</body>
+</html>
