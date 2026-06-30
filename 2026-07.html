@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>햇살 7월 계획표 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --cream: #FAF3EA;
+    --apricot: #F5EBE0;
+    --terracotta: #C8845A;
+    --dark-brown: #3C2415;
+    --doran: #7C5CBF;
+    --doran-light: #EDE8F8;
+    --naru: #E07B3A;
+    --naru-light: #FDF0E6;
+    --deeper: #3A7ABF;
+    --deeper-light: #E6EFF8;
+    --personal: #4CAF7D;
+    --personal-light: #E8F5EE;
+    --shadow: rgba(60,36,21,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--cream);
+    color: var(--dark-brown);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--dark-brown);
+    color: var(--cream);
+    height: 25mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .brand-line {
+    font-size: 8px;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  .header-title {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Noto Serif KR', serif;
+    letter-spacing: 1px;
+  }
+
+  .header-sub {
+    font-size: 10px;
+    opacity: 0.55;
+    letter-spacing: 2px;
+    font-weight: 300;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* ─── SECTION TITLE ─── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+
+  .section-label h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--terracotta);
+    text-transform: uppercase;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--terracotta);
+    opacity: 0.25;
+  }
+
+  /* ─── READING TRACKER ─── */
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .book-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 16px var(--shadow);
+    border-top: 4px solid;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    border-radius: 0 0 0 100%;
+    opacity: 0.06;
+  }
+
+  .book-card.doran { border-color: var(--doran); }
+  .book-card.doran::before { background: var(--doran); }
+  .book-card.naru { border-color: var(--naru); }
+  .book-card.naru::before { background: var(--naru); }
+  .book-card.deeper { border-color: var(--deeper); }
+  .book-card.deeper::before { background: var(--deeper); }
+  .book-card.personal { border-color: var(--personal); }
+  .book-card.personal::before { background: var(--personal); }
+
+  .book-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .doran .book-badge { background: var(--doran-light); color: var(--doran); }
+  .naru .book-badge { background: var(--naru-light); color: var(--naru); }
+  .deeper .book-badge { background: var(--deeper-light); color: var(--deeper); }
+  .personal .book-badge { background: var(--personal-light); color: var(--personal); }
+
+  .book-title {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Serif KR', serif;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    color: var(--dark-brown);
+  }
+
+  .book-author {
+    font-size: 11px;
+    color: var(--terracotta);
+    opacity: 0.8;
+    margin-bottom: 12px;
+  }
+
+  .book-deadline {
+    font-size: 10.5px;
+    color: var(--dark-brown);
+    opacity: 0.6;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .book-deadline span {
+    background: var(--apricot);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--terracotta);
+    font-size: 10px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    margin-bottom: 6px;
+    opacity: 0.65;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--apricot);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease;
+  }
+
+  .doran .progress-fill { background: var(--doran); }
+  .naru .progress-fill { background: var(--naru); }
+  .deeper .progress-fill { background: var(--deeper); }
+  .personal .progress-fill { background: var(--personal); }
+
+  .book-milestones {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .milestone {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 10.5px;
+    color: var(--dark-brown);
+    opacity: 0.75;
+    line-height: 1.4;
+  }
+
+  .milestone::before {
+    content: '▸';
+    font-size: 9px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .doran .milestone::before { color: var(--doran); }
+  .naru .milestone::before { color: var(--naru); }
+  .deeper .milestone::before { color: var(--deeper); }
+  .personal .milestone::before { color: var(--personal); }
+
+  /* ─── WEEKLY CALENDAR ─── */
+  .week-card {
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 20px var(--shadow);
+    overflow: hidden;
+  }
+
+  .week-header {
+    background: var(--dark-brown);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .week-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--terracotta);
+    opacity: 0.9;
+  }
+
+  .week-range {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--cream);
+    font-family: 'Noto Serif KR', serif;
+  }
+
+  .week-keywords {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .kw-tag {
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .kw-tag.doran { background: var(--doran-light); color: var(--doran); }
+  .kw-tag.naru { background: var(--naru-light); color: var(--naru); }
+  .kw-tag.deeper { background: var(--deeper-light); color: var(--deeper); }
+  .kw-tag.personal { background: var(--personal-light); color: var(--personal); }
+  .kw-tag.event { background: #FFF5E6; color: #C8845A; }
+
+  .week-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  .day-col {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .day-header {
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 8px;
+    margin-bottom: 2px;
+  }
+
+  .day-name {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .day-date {
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    line-height: 1.2;
+  }
+
+  .day-col.sun .day-name, .day-col.sun .day-date { color: #E05252; }
+  .day-col.sat .day-name, .day-col.sat .day-date { color: var(--deeper); }
+  .day-col.mon .day-name, .day-col.mon .day-date,
+  .day-col.tue .day-name, .day-col.tue .day-date,
+  .day-col.wed .day-name, .day-col.wed .day-date,
+  .day-col.thu .day-name, .day-col.thu .day-date,
+  .day-col.fri .day-name, .day-col.fri .day-date { color: var(--dark-brown); }
+
+  .day-col.today .day-header {
+    background: var(--terracotta);
+  }
+  .day-col.today .day-name,
+  .day-col.today .day-date { color: white !important; }
+
+  .day-col.other-month .day-date { opacity: 0.3; }
+
+  .event-pill {
+    font-size: 8.5px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    line-height: 1.3;
+    font-weight: 500;
+    word-break: keep-all;
+  }
+
+  .event-pill.fixed { background: #F0EBE3; color: #6B4F35; }
+  .event-pill.doran { background: var(--doran-light); color: var(--doran); font-weight: 600; }
+  .event-pill.naru { background: var(--naru-light); color: var(--naru); font-weight: 600; }
+  .event-pill.deeper { background: var(--deeper-light); color: var(--deeper); font-weight: 600; }
+  .event-pill.personal { background: var(--personal-light); color: var(--personal); font-weight: 600; }
+  .event-pill.special { background: #FFF3CD; color: #8B6914; }
+  .event-pill.deadline { background: var(--terracotta); color: white; font-weight: 700; }
+
+  .event-time {
+    font-size: 7.5px;
+    opacity: 0.75;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  /* ─── READING SCHEDULE TABLE ─── */
+  .reading-schedule {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 20px var(--shadow);
+    margin-bottom: 24px;
+  }
+
+  .reading-schedule h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+
+  .reading-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--apricot);
+    align-items: start;
+    font-size: 10.5px;
+  }
+
+  .reading-row.header-row {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--terracotta);
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+
+  .reading-row:last-child { border-bottom: none; }
+
+  .week-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--apricot);
+    color: var(--terracotta);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .read-task {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    line-height: 1.4;
+  }
+
+  .read-task.deeper { background: var(--deeper-light); color: var(--deeper); }
+  .read-task.naru { background: var(--naru-light); color: var(--naru); }
+  .read-task.doran { background: var(--doran-light); color: var(--doran); }
+  .read-task.personal { background: var(--personal-light); color: var(--personal); }
+  .read-task.empty { color: #ccc; font-size: 10px; padding: 4px 8px; }
+
+  /* ─── WEEKLY SUMMARY BOX ─── */
+  .week-summary {
+    background: var(--apricot);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 8px 20px 16px;
+    font-size: 10.5px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .summary-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11.5px;
+    color: #C4763A;
+    opacity: 0.55;
+    letter-spacing: 1px;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    .tracker-grid { grid-template-columns: 1fr; }
+
+    .week-body {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .week-body .day-col:nth-child(n+5) {
+      grid-column: auto;
+    }
+
+    .week-range { font-size: 14px; }
+
+    .reading-row {
+      grid-template-columns: 50px 1fr 1fr;
+      font-size: 9.5px;
+    }
+
+    .reading-row .col-naru,
+    .reading-row .col-doran { display: none; }
+
+    .reading-row.header-row .col-naru,
+    .reading-row.header-row .col-doran { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .week-body {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .container { padding: 20px 12px 50px; }
+    header { height: auto; padding: 16px 20px; }
+  }
+
+  /* ─── NOTICE BOX ─── */
+  .notice-card {
+    background: linear-gradient(135deg, #FFF8F2 0%, var(--apricot) 100%);
+    border-radius: 16px;
+    padding: 20px 24px;
+    border-left: 4px solid var(--terracotta);
+    margin-bottom: 24px;
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--dark-brown);
+  }
+
+  .notice-card strong {
+    color: var(--terracotta);
+    font-size: 11px;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .notice-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 3px;
+    opacity: 0.85;
+  }
+
+  .notice-item::before {
+    content: '·';
+    color: var(--terracotta);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="brand-line">P O G N A R U &nbsp;×&nbsp; C l a u d e</div>
+  <div class="header-title">2026년 7월 계획표</div>
+  <div class="header-sub">Monthly Planner &nbsp;·&nbsp; 가비</div>
+</header>
+
+<div class="container">
+
+  <!-- ══════════════ NOTICE ══════════════ -->
+  <div class="notice-card">
+    <strong>☀ 햇살(이다현)에게 · 가비의 한마디</strong>
+    <div class="notice-item">고정 일정: 수 레지오 10:40 / 금 마르코 성경 10:40 / 목 디퍼 수사 세션 21:00 / 토 자모회 14:00 + 어린이미사 16:00</div>
+    <div class="notice-item">에디톨로지는 마감 하루 전날 완료, 마음은 7/20 상 재독 → 7/20 전체 완독, 절창은 7/22 완독으로 역산 배치했어요.</div>
+    <div class="notice-item">파리의 노트르담은 토요일 제외, 일요일 집중 + 화·목 오전에 배치. 주 5~6장 느긋한 페이스예요.</div>
+    <div class="notice-item">무리한 날엔 독서 분량을 조금 줄여도 괜찮아요. 흐름이 더 중요하니까요 🧡</div>
+  </div>
+
+  <!-- ══════════════ READING TRACKER ══════════════ -->
+  <div class="section-label"><h2>📚 Reading Tracker</h2></div>
+
+  <div class="tracker-grid">
+
+    <!-- 에디톨로지 -->
+    <div class="book-card deeper">
+      <div class="book-badge">디퍼 · 언브랜딩</div>
+      <div class="book-title">에디톨로지</div>
+      <div class="book-author">김정운</div>
+      <div class="book-deadline">최종 마감 <span>7/15 (수)</span></div>
+      <div class="progress-label"><span>진행률</span><span>35%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+      <div class="book-milestones">
+        <div class="milestone">7/1(수) 전: 1부 1~10장 (현 3장→)</div>
+        <div class="milestone">7/8(수) 전: 2부 1~10장</div>
+        <div class="milestone">7/15(수) 전: 3부 1~10장 + 에필로그</div>
+        <div class="milestone">7/16(목) 디퍼 세션 토론 (완독 상태로)</div>
+      </div>
+    </div>
+
+    <!-- 마음 -->
+    <div class="book-card naru">
+      <div class="book-badge">나루의 밤</div>
+      <div class="book-title">마음 (こころ)</div>
+      <div class="book-author">나쓰메 소세키</div>
+      <div class="book-deadline">토론 마감 <span>7/21 (화)</span></div>
+      <div class="progress-label"><span>진행률</span><span>0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="book-milestones">
+        <div class="milestone">7/19(일) 전: 상 재독 완료</div>
+        <div class="milestone">7/20(월) 전: 중·하 1독 완료</div>
+        <div class="milestone">7/21(화) 나루의 밤 토론 당일</div>
+      </div>
+    </div>
+
+    <!-- 절창 -->
+    <div class="book-card doran">
+      <div class="book-badge">도란도란</div>
+      <div class="book-title">절창</div>
+      <div class="book-author">구병모</div>
+      <div class="book-deadline">완독 마감 <span>7/22 (수)</span></div>
+      <div class="progress-label"><span>진행률</span><span>0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="book-milestones">
+        <div class="milestone">7/22(수): 하루 완독 (단편집, 여유일 배치)</div>
+        <div class="milestone">7/23(목) 도란도란 토론 (책방 기억의 숲)</div>
+      </div>
+    </div>
+
+    <!-- 파리의 노트르담 -->
+    <div class="book-card personal">
+      <div class="book-badge">개인 독서</div>
+      <div class="book-title">파리의 노트르담</div>
+      <div class="book-author">빅토르 위고</div>
+      <div class="book-deadline">7월 목표 <span>1권 완독</span></div>
+      <div class="progress-label"><span>진행률 (1권)</span><span>약 20%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+      <div class="book-milestones">
+        <div class="milestone">현재: 1권 1부 4장</div>
+        <div class="milestone">주 5~6장 페이스 (일·화·목 오전)</div>
+        <div class="milestone">토요일 제외, 일요일 집중 독서</div>
+        <div class="milestone">8월 목표: 2권 완독</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ READING SCHEDULE TABLE ══════════════ -->
+  <div class="section-label"><h2>📖 주차별 독서 분량</h2></div>
+
+  <div class="reading-schedule">
+    <div class="reading-row header-row">
+      <div>주차</div>
+      <div>에디톨로지</div>
+      <div class="col-naru">마음</div>
+      <div class="col-doran">절창</div>
+      <div>파리의 노트르담</div>
+    </div>
+    <div class="reading-row">
+      <div><span class="week-tag">W1<br>6/29~7/5</span></div>
+      <div><span class="read-task deeper">1부 1~10장<br>(현 3장→) 7/1 전 완료</span></div>
+      <div class="col-naru"><span class="read-task empty">—</span></div>
+      <div class="col-doran"><span class="read-task empty">—</span></div>
+      <div><span class="read-task personal">일 5~6장<br>화·목 오전 2~3장씩</span></div>
+    </div>
+    <div class="reading-row">
+      <div><span class="week-tag">W2<br>7/6~7/12</span></div>
+      <div><span class="read-task deeper">2부 1~10장<br>7/8 전 완료</span></div>
+      <div class="col-naru"><span class="read-task naru">마음 상<br>천천히 시작</span></div>
+      <div class="col-doran"><span class="read-task empty">—</span></div>
+      <div><span class="read-task personal">일 5~6장<br>화·목 오전 2~3장씩</span></div>
+    </div>
+    <div class="reading-row">
+      <div><span class="week-tag">W3<br>7/13~7/19</span></div>
+      <div><span class="read-task deeper">3부 1~10장<br>+에필로그 7/15 전 완료</span></div>
+      <div class="col-naru"><span class="read-task naru">상 재독 7/19 전 완료<br>중 1독 시작</span></div>
+      <div class="col-doran"><span class="read-task empty">—</span></div>
+      <div><span class="read-task personal">일 5~6장<br>화·목 오전 2~3장씩</span></div>
+    </div>
+    <div class="reading-row">
+      <div><span class="week-tag">W4<br>7/20~7/26</span></div>
+      <div><span class="read-task empty">완독 ✓</span></div>
+      <div class="col-naru"><span class="read-task naru">중·하 완독<br>7/20 전 완료</span></div>
+      <div class="col-doran"><span class="read-task doran">절창 하루 완독<br>7/22(수)</span></div>
+      <div><span class="read-task personal">일 5~6장<br>화·목 오전 2~3장씩</span></div>
+    </div>
+    <div class="reading-row">
+      <div><span class="week-tag">W5<br>7/27~7/31</span></div>
+      <div><span class="read-task empty">완독 ✓</span></div>
+      <div class="col-naru"><span class="read-task empty">완독 ✓</span></div>
+      <div class="col-doran"><span class="read-task empty">완독 ✓</span></div>
+      <div><span class="read-task personal">일 5~6장<br>화·목 오전 2~3장씩<br>→ 1권 완독 목표</span></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ WEEKLY CALENDAR ══════════════ -->
+  <div class="section-label"><h2>🗓 월간 캘린더</h2></div>
+
+  <!-- ── WEEK 1: 6/29 ~ 7/5 ── -->
+  <div class="week-card">
+    <div class="week-header">
+      <div>
+        <div class="week-num">W 2 7</div>
+        <div class="week-range">6월 29일 — 7월 5일</div>
+      </div>
+      <div class="week-keywords">
+        <span class="kw-tag deeper">디퍼 OT</span>
+        <span class="kw-tag event">도란도란</span>
+        <span class="kw-tag deeper">에디톨로지 1부</span>
+        <span class="kw-tag personal">파리 독서 시작</span>
+      
