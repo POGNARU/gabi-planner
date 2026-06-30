@@ -88,8 +88,8 @@ body{
 .read-row{display:flex;align-items:center;gap:11px;}
 .read-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .read-name{font-size:15px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.read-pips{display:flex;gap:7px;flex-shrink:0;}
-.pip{width:13px;height:13px;border-radius:50%;cursor:pointer;transition:transform .12s;background:var(--line);}
+.read-pips{display:flex;gap:5px;flex-shrink:0;}
+.pip{width:11px;height:11px;border-radius:50%;cursor:pointer;transition:transform .12s;background:var(--line);}
 .pip:hover{transform:scale(1.18);}
 .read-del{background:none;border:none;color:var(--faint);cursor:pointer;font-size:13px;padding:0 0 0 4px;flex-shrink:0;opacity:0;transition:opacity .15s,color .2s;}
 .read-row:hover .read-del{opacity:1;}
@@ -186,7 +186,7 @@ textarea.memo::placeholder{color:var(--faint);}
 <script>
 // ════════════ 데이터 ════════════
 const LS = { reads:'gabi-reads', habits:'gabi-habits', events:'gabi-events', memos:'gabi-memos' };
-const SEED_VER = '202607c';   // 시드 갱신 시 이 값을 올리면 일정·독서가 새로 적용됨(습관·메모는 보존)
+const SEED_VER = '202607d';   // 시드 갱신 시 이 값을 올리면 일정·독서가 새로 적용됨(습관·메모는 보존)
 const load = (k,fb)=>JSON.parse(localStorage.getItem(k)||'null') ?? fb;
 
 // 일정 카테고리 (색은 도서·활동 기준)
@@ -211,11 +211,14 @@ const HABIT_DEFS = [
 // 독서 트래커 (도서명 · 토론 색)
 function seedReads(){
   return [
-    {id:'r1', name:'절창 — 구병모',          color:'#E89AAE', steps:4, done:0},  // 도란도란 핑크
-    {id:'r2', name:'마음 — 나쓰메 소세키',   color:'#EFDF8A', steps:3, done:0},  // 나루의 밤 바나나
-    {id:'r3', name:'에디톨로지 — 김정운',    color:'#2E4D6E', steps:3, done:0},  // 디퍼 네이비
-    {id:'r4', name:'파리의 노트르담 — 위고', color:'#C9ADE2', steps:6, done:0},  // 개인 라일락 (1권 6부)
-    {id:'r5', name:'프린키피아 — 뉴턴',      color:'#EFDF8A', steps:4, done:0},  // 바나나
+    {id:'r1', name:'절창 — 구병모', color:'#E89AAE', done:0,
+      parts:['7/14 · p1~87','7/15 · p88~175','7/16 · p176~262','7/22 · p263~349 완독']},
+    {id:'r2', name:'마음 — 나쓰메 소세키', color:'#EFDF8A', done:0,
+      parts:['7/17 · 상','7/19 · 중·하','7/20 · 상 재독']},
+    {id:'r3', name:'에디톨로지 — 김정운', color:'#2E4D6E', done:0,
+      parts:['7/1 · 1부 6~10장','7/3 · 2부 1~5장','7/5 · 2부 6~10장','7/10 · 3부 1~5장','7/13 · 3부 6~10장+에필']},
+    {id:'r4', name:'파리의 노트르담 — 위고', color:'#C9ADE2', done:0,
+      parts:['7/5 · 1부 4~6장','7/7 · 2부 1~4장','7/9 · 2부 5~7장','7/14 · 3부 1~2장','7/16 · 4부 1~3장','7/21 · 4부 4~6장','7/26 · 5부 1~2장','7/28 · 6부 1~3장','7/30 · 6부 4~5장(완독)']},
   ];
 }
 
@@ -259,10 +262,14 @@ function seedEvents(){
       {id:'s16',name:'디퍼 2기 문법 세션3',time:'21:00–23:00',cat:'deeper'},
       {id:'d8',name:'에디톨로지 3부 6~10장 + 에필로그 읽기',time:'',cat:'deeper'}],
     '2026-07-14':[
-      {id:'d9',name:'파리의 노트르담 3부 1~2장 읽기',time:'오전',cat:'personal'}],
+      {id:'d9',name:'파리의 노트르담 3부 1~2장 읽기',time:'오전',cat:'personal'},
+      {id:'c1',name:'절창 p1~87 읽기',time:'오후',cat:'club'}],
+    '2026-07-15':[
+      {id:'c2',name:'절창 p88~175 읽기',time:'오후',cat:'club'}],
     '2026-07-16':[
       {id:'s17',name:'디퍼 1기 수사 세션11 · 에디톨로지 3부',time:'21:00–23:00',cat:'deeper',em:true},
-      {id:'d10',name:'파리의 노트르담 4부 1~3장 읽기',time:'오전',cat:'personal'}],
+      {id:'d10',name:'파리의 노트르담 4부 1~3장 읽기',time:'오전',cat:'personal'},
+      {id:'c3',name:'절창 p176~262 읽기',time:'오후',cat:'club'}],
     '2026-07-17':[
       {id:'d11',name:'마음 — 상 읽기',time:'오후',cat:'naru'}],
     '2026-07-19':[
@@ -274,7 +281,7 @@ function seedEvents(){
       {id:'s19',name:'나루의 밤 · 마음 토론',time:'20:00–22:00',cat:'naru',em:true},
       {id:'d14',name:'파리의 노트르담 4부 4~6장 읽기',time:'오전',cat:'personal'}],
     '2026-07-22':[
-      {id:'d15',name:'절창 완독 (하루 완독)',time:'',cat:'club'}],
+      {id:'c4',name:'절창 p263~349 읽기 (완독)',time:'',cat:'club'}],
     '2026-07-23':[
       {id:'s20',name:'도란도란 · 절창 토론',time:'09:30–12:00',cat:'club',em:true}],
     '2026-07-25':[
@@ -356,8 +363,12 @@ function renderReads(){
   const el=document.getElementById('readList');
   if(!READS.length){ el.innerHTML=`<div class="ev-empty">아직 등록한 독서가 없어요</div>`; return; }
   el.innerHTML=READS.map(r=>{
+    const steps = r.parts ? r.parts.length : (r.steps||0);
     let pips='';
-    for(let i=0;i<r.steps;i++) pips+=`<div class="pip" style="${i<r.done?`background:${r.color}`:''}" onclick="setPip('${r.id}',${i})"></div>`;
+    for(let i=0;i<steps;i++){
+      const lbl = r.parts ? r.parts[i] : `${i+1}칸`;
+      pips+=`<div class="pip" style="${i<r.done?`background:${r.color}`:''}" title="${esc(lbl)}" onclick="setPip('${r.id}',${i})"></div>`;
+    }
     return `<div class="read-row">
       <div class="read-dot" style="background:${r.color}"></div>
       <div class="read-name">${esc(r.name)}</div>
