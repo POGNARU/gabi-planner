@@ -186,16 +186,84 @@ textarea.memo::placeholder{color:var(--faint);}
 <script>
 // ════════════ 데이터 ════════════
 const LS = { reads:'gabi-reads', habits:'gabi-habits', events:'gabi-events', memos:'gabi-memos' };
+const SEED_VER = '202607b';   // 시드 갱신 시 이 값을 올리면 일정·독서가 새로 적용됨(습관·메모는 보존)
 const load = (k,fb)=>JSON.parse(localStorage.getItem(k)||'null') ?? fb;
 
-let READS  = load(LS.reads, [
-  {id:'r1', name:'도란도란', color:'#E89AAE', steps:4, done:2},
-  {id:'r2', name:'나루의 밤', color:'#E6C24C', steps:3, done:1},
-  {id:'r3', name:'개인 도서', color:'#B589D6', steps:4, done:3},
-  {id:'r4', name:'디퍼', color:'#2E4D6E', steps:2, done:1},
-]);
+// 일정 카테고리 (색은 도서·활동 기준)
+const CATS = [
+  {key:'club',     label:'도란도란',  color:'#E89AAE'},
+  {key:'naru',     label:'나루의 밤', color:'#EFDF8A'},
+  {key:'deeper',   label:'디퍼',      color:'#2E4D6E'},
+  {key:'personal', label:'개인',      color:'#C9ADE2'},
+  {key:'mass',     label:'성당·신앙', color:'#E8973A'},
+  {key:'hospital', label:'병원',      color:'#9CAE86'},
+  {key:'kid',      label:'아이',      color:'#5BB0DD'},
+];
+const catColor = k => (CATS.find(c=>c.key===k)||{}).color || '#C8845A';
+
+// 습관 (3종)
+const HABIT_DEFS = [
+  {id:'sunlit',  name:'선릿모닝', color:'#E6D243'},  // 레몬
+  {id:'spanish', name:'스페인어', color:'#6E7A3C'},  // 다크올리브
+  {id:'reading', name:'독서',     color:'#9A6B43'},  // 브라운
+];
+
+// 독서 트래커 (도서명 · 토론 색)
+function seedReads(){
+  return [
+    {id:'r1', name:'절창 — 구병모',          color:'#E89AAE', steps:4, done:0},  // 도란도란 핑크
+    {id:'r2', name:'마음 — 나쓰메 소세키',   color:'#EFDF8A', steps:3, done:0},  // 나루의 밤 바나나
+    {id:'r3', name:'에디톨로지 — 김정운',    color:'#2E4D6E', steps:3, done:0},  // 디퍼 네이비
+    {id:'r4', name:'파리의 노트르담 — 위고', color:'#C9ADE2', steps:5, done:1},  // 개인 라일락
+    {id:'r5', name:'프린키피아 — 뉴턴',      color:'#C9ADE2', steps:4, done:0},  // 개인 라일락
+  ];
+}
+
+// 7월 시드 일정
+function seedEvents(){
+  return {
+    '2026-07-02':[
+      {id:'s1',name:'도란도란 · 파리의 노트르담 토론',time:'09:30–12:00',cat:'club',em:true},
+      {id:'s2',name:'디퍼 1기 수사 세션9 · 에디톨로지 1부',time:'21:00–23:00',cat:'deeper',em:true}],
+    '2026-07-05':[{id:'s3',name:'서핑 (아이)',time:'09:30–11:30',cat:'kid'}],
+    '2026-07-06':[
+      {id:'s4',name:'새벽복사 (아이)',time:'06:00–07:00',cat:'mass'},
+      {id:'s5',name:'치과진료',time:'14:00–14:30',cat:'hospital'},
+      {id:'s6',name:'디퍼 2기 문법 세션2',time:'21:00–23:00',cat:'deeper'}],
+    '2026-07-08':[{id:'s7',name:'레지오',time:'10:40–12:00',cat:'mass'}],
+    '2026-07-09':[
+      {id:'s8',name:'퀸즈여성 (병원)',time:'09:00–09:30',cat:'hospital'},
+      {id:'s9',name:'디퍼 1기 수사 세션10 · 에디톨로지 2부',time:'21:00–23:00',cat:'deeper',em:true}],
+    '2026-07-10':[
+      {id:'s10',name:'마르코 성경공부',time:'10:50–12:00',cat:'mass'},
+      {id:'s11',name:'점심 식사',time:'12:00–14:00',cat:'mass'}],
+    '2026-07-11':[
+      {id:'s12',name:'임원회의',time:'14:00–15:50',cat:'mass'},
+      {id:'s13',name:'어린이 미사',time:'16:00–17:00',cat:'mass'}],
+    '2026-07-12':[
+      {id:'s14',name:'CPBC 방송 캠프 (아이)',time:'09:30–17:00',cat:'kid'},
+      {id:'s15',name:'프린키피아',time:'20:00–22:00',cat:'personal',em:true}],
+    '2026-07-13':[{id:'s16',name:'디퍼 2기 문법 세션3',time:'21:00–23:00',cat:'deeper'}],
+    '2026-07-16':[{id:'s17',name:'디퍼 1기 수사 세션11 · 에디톨로지 3부',time:'21:00–23:00',cat:'deeper',em:true}],
+    '2026-07-20':[{id:'s18',name:'디퍼 2기 문법 세션4',time:'21:00–23:00',cat:'deeper'}],
+    '2026-07-21':[{id:'s19',name:'나루의 밤 · 마음 토론',time:'20:00–22:00',cat:'naru',em:true}],
+    '2026-07-23':[{id:'s20',name:'도란도란 · 절창 토론',time:'09:30–12:00',cat:'club',em:true}],
+    '2026-07-25':[{id:'s21',name:'디퍼 1기 수사 수료',time:'',cat:'deeper',em:true}],
+    '2026-07-26':[{id:'s22',name:'프린키피아',time:'20:00–22:00',cat:'personal',em:true}],
+    '2026-07-27':[{id:'s23',name:'디퍼 2기 문법 세션5',time:'21:00–23:00',cat:'deeper'}],
+  };
+}
+
+// 시드 버전이 바뀌면 일정·독서를 새로 적용 (습관 체크·메모는 유지)
+if(localStorage.getItem('gabi-seedver') !== SEED_VER){
+  localStorage.setItem(LS.events, JSON.stringify(seedEvents()));
+  localStorage.setItem(LS.reads, JSON.stringify(seedReads()));
+  localStorage.setItem('gabi-seedver', SEED_VER);
+}
+
+let READS  = load(LS.reads, seedReads());
 let HABITS = load(LS.habits, {});
-let EVENTS = load(LS.events, null);
+let EVENTS = load(LS.events, {});
 let MEMOS  = load(LS.memos, {});
 
 function save(){
@@ -204,45 +272,6 @@ function save(){
   localStorage.setItem(LS.events, JSON.stringify(EVENTS));
   localStorage.setItem(LS.memos, JSON.stringify(MEMOS));
 }
-
-// 일정 카테고리
-const CATS = [
-  {key:'mass',    label:'미사·신앙', color:'#E8973A'},
-  {key:'service', label:'전례·봉사', color:'#5BB0DD'},
-  {key:'club',    label:'독서모임',  color:'#E89AAE'},
-  {key:'read',    label:'개인독서',  color:'#B589D6'},
-  {key:'class',   label:'클래스·나루',color:'#E6C24C'},
-  {key:'deeper',  label:'디퍼·작업', color:'#2E4D6E'},
-];
-const catColor = k => (CATS.find(c=>c.key===k)||{}).color || '#C8845A';
-
-// 습관
-const HABIT_DEFS = [
-  {id:'sunlit',  name:'선릿모닝(몽롱쓰기)', color:'#C8845A'},
-  {id:'spanish', name:'스페인어 원서',      color:'#70a070'},
-  {id:'reading', name:'고전 읽기',          color:'#B589D6'},
-  {id:'writing', name:'원고·에세이',        color:'#E8973A'},
-  {id:'rest',    name:'9시 이전 마무리',    color:'#5BB0DD'},
-];
-
-// 7월 시드 일정
-function seedEvents(){
-  return {
-    '2026-07-01':[{id:'s1',name:'선릿모닝 1기 개강',time:'05:50',cat:'class',em:true},{id:'s2',name:'레지오',time:'10:40',cat:'mass'}],
-    '2026-07-02':[{id:'s3',name:'나루의 밤 모집 마감',time:'',cat:'class'},{id:'s4',name:'디퍼 줌',time:'21:00',cat:'deeper'}],
-    '2026-07-03':[{id:'s5',name:'오전 미사',time:'10:00',cat:'mass'},{id:'s6',name:'마르코 성경공부',time:'10:40',cat:'club'}],
-    '2026-07-04':[{id:'s7',name:'자모회',time:'14:00',cat:'service'},{id:'s8',name:'어린이 미사',time:'16:00',cat:'mass'}],
-    '2026-07-09':[{id:'s9',name:'디퍼 줌',time:'21:00',cat:'deeper'}],
-    '2026-07-10':[{id:'s10',name:'미사·마르코 성경공부',time:'10:00',cat:'mass'}],
-    '2026-07-16':[{id:'s11',name:'디퍼 줌',time:'21:00',cat:'deeper'}],
-    '2026-07-17':[{id:'s12',name:'미사·마르코 성경공부',time:'10:00',cat:'mass'}],
-    '2026-07-23':[{id:'s13',name:'디퍼 줌',time:'21:00',cat:'deeper'}],
-    '2026-07-24':[{id:'s14',name:'미사·마르코 성경공부',time:'10:00',cat:'mass'}],
-    '2026-07-30':[{id:'s15',name:'디퍼 줌',time:'21:00',cat:'deeper'}],
-    '2026-07-31':[{id:'s16',name:'미사·마르코 성경공부',time:'10:00',cat:'mass'}],
-  };
-}
-if(EVENTS===null){ EVENTS=seedEvents(); save(); }
 
 // ════════════ 상태/헬퍼 ════════════
 const today = new Date();
