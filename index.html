@@ -186,7 +186,7 @@ textarea.memo::placeholder{color:var(--faint);}
 <script>
 // ════════════ 데이터 ════════════
 const LS = { reads:'gabi-reads', habits:'gabi-habits', events:'gabi-events', memos:'gabi-memos' };
-const SEED_VER = '202607b';   // 시드 갱신 시 이 값을 올리면 일정·독서가 새로 적용됨(습관·메모는 보존)
+const SEED_VER = '202607c';   // 시드 갱신 시 이 값을 올리면 일정·독서가 새로 적용됨(습관·메모는 보존)
 const load = (k,fb)=>JSON.parse(localStorage.getItem(k)||'null') ?? fb;
 
 // 일정 카테고리 (색은 도서·활동 기준)
@@ -214,43 +214,80 @@ function seedReads(){
     {id:'r1', name:'절창 — 구병모',          color:'#E89AAE', steps:4, done:0},  // 도란도란 핑크
     {id:'r2', name:'마음 — 나쓰메 소세키',   color:'#EFDF8A', steps:3, done:0},  // 나루의 밤 바나나
     {id:'r3', name:'에디톨로지 — 김정운',    color:'#2E4D6E', steps:3, done:0},  // 디퍼 네이비
-    {id:'r4', name:'파리의 노트르담 — 위고', color:'#C9ADE2', steps:5, done:1},  // 개인 라일락
-    {id:'r5', name:'프린키피아 — 뉴턴',      color:'#C9ADE2', steps:4, done:0},  // 개인 라일락
+    {id:'r4', name:'파리의 노트르담 — 위고', color:'#C9ADE2', steps:6, done:0},  // 개인 라일락 (1권 6부)
+    {id:'r5', name:'프린키피아 — 뉴턴',      color:'#EFDF8A', steps:4, done:0},  // 바나나
   ];
 }
 
-// 7월 시드 일정
+// 7월 시드 일정 (s = 약속/고정, d = 독서 분량)
 function seedEvents(){
   return {
+    '2026-07-01':[
+      {id:'d1',name:'에디톨로지 1부 6~10장 읽기',time:'',cat:'deeper'}],
     '2026-07-02':[
       {id:'s1',name:'도란도란 · 파리의 노트르담 토론',time:'09:30–12:00',cat:'club',em:true},
       {id:'s2',name:'디퍼 1기 수사 세션9 · 에디톨로지 1부',time:'21:00–23:00',cat:'deeper',em:true}],
-    '2026-07-05':[{id:'s3',name:'서핑 (아이)',time:'09:30–11:30',cat:'kid'}],
+    '2026-07-03':[
+      {id:'d2',name:'에디톨로지 2부 1~5장 읽기',time:'오후',cat:'deeper'}],
+    '2026-07-05':[
+      {id:'s3',name:'서핑 (아이)',time:'09:30–11:30',cat:'kid'},
+      {id:'d3',name:'에디톨로지 2부 6~10장 읽기',time:'',cat:'deeper'},
+      {id:'d4',name:'파리의 노트르담 1부 4~6장 읽기',time:'',cat:'personal'}],
     '2026-07-06':[
       {id:'s4',name:'새벽복사 (아이)',time:'06:00–07:00',cat:'mass'},
       {id:'s5',name:'치과진료',time:'14:00–14:30',cat:'hospital'},
       {id:'s6',name:'디퍼 2기 문법 세션2',time:'21:00–23:00',cat:'deeper'}],
-    '2026-07-08':[{id:'s7',name:'레지오',time:'10:40–12:00',cat:'mass'}],
+    '2026-07-07':[
+      {id:'d5',name:'파리의 노트르담 2부 1~4장 읽기',time:'오전',cat:'personal'}],
+    '2026-07-08':[
+      {id:'s7',name:'레지오',time:'10:40–12:00',cat:'mass'}],
     '2026-07-09':[
       {id:'s8',name:'퀸즈여성 (병원)',time:'09:00–09:30',cat:'hospital'},
-      {id:'s9',name:'디퍼 1기 수사 세션10 · 에디톨로지 2부',time:'21:00–23:00',cat:'deeper',em:true}],
+      {id:'s9',name:'디퍼 1기 수사 세션10 · 에디톨로지 2부',time:'21:00–23:00',cat:'deeper',em:true},
+      {id:'d6',name:'파리의 노트르담 2부 5~7장 읽기',time:'오전',cat:'personal'}],
     '2026-07-10':[
       {id:'s10',name:'마르코 성경공부',time:'10:50–12:00',cat:'mass'},
-      {id:'s11',name:'점심 식사',time:'12:00–14:00',cat:'mass'}],
+      {id:'s11',name:'점심 식사',time:'12:00–14:00',cat:'mass'},
+      {id:'d7',name:'에디톨로지 3부 1~5장 읽기',time:'오후',cat:'deeper'}],
     '2026-07-11':[
       {id:'s12',name:'임원회의',time:'14:00–15:50',cat:'mass'},
       {id:'s13',name:'어린이 미사',time:'16:00–17:00',cat:'mass'}],
     '2026-07-12':[
       {id:'s14',name:'CPBC 방송 캠프 (아이)',time:'09:30–17:00',cat:'kid'},
-      {id:'s15',name:'프린키피아',time:'20:00–22:00',cat:'personal',em:true}],
-    '2026-07-13':[{id:'s16',name:'디퍼 2기 문법 세션3',time:'21:00–23:00',cat:'deeper'}],
-    '2026-07-16':[{id:'s17',name:'디퍼 1기 수사 세션11 · 에디톨로지 3부',time:'21:00–23:00',cat:'deeper',em:true}],
-    '2026-07-20':[{id:'s18',name:'디퍼 2기 문법 세션4',time:'21:00–23:00',cat:'deeper'}],
-    '2026-07-21':[{id:'s19',name:'나루의 밤 · 마음 토론',time:'20:00–22:00',cat:'naru',em:true}],
-    '2026-07-23':[{id:'s20',name:'도란도란 · 절창 토론',time:'09:30–12:00',cat:'club',em:true}],
-    '2026-07-25':[{id:'s21',name:'디퍼 1기 수사 수료',time:'',cat:'deeper',em:true}],
-    '2026-07-26':[{id:'s22',name:'프린키피아',time:'20:00–22:00',cat:'personal',em:true}],
-    '2026-07-27':[{id:'s23',name:'디퍼 2기 문법 세션5',time:'21:00–23:00',cat:'deeper'}],
+      {id:'s15',name:'프린키피아',time:'20:00–22:00',cat:'naru',em:true}],
+    '2026-07-13':[
+      {id:'s16',name:'디퍼 2기 문법 세션3',time:'21:00–23:00',cat:'deeper'},
+      {id:'d8',name:'에디톨로지 3부 6~10장 + 에필로그 읽기',time:'',cat:'deeper'}],
+    '2026-07-14':[
+      {id:'d9',name:'파리의 노트르담 3부 1~2장 읽기',time:'오전',cat:'personal'}],
+    '2026-07-16':[
+      {id:'s17',name:'디퍼 1기 수사 세션11 · 에디톨로지 3부',time:'21:00–23:00',cat:'deeper',em:true},
+      {id:'d10',name:'파리의 노트르담 4부 1~3장 읽기',time:'오전',cat:'personal'}],
+    '2026-07-17':[
+      {id:'d11',name:'마음 — 상 읽기',time:'오후',cat:'naru'}],
+    '2026-07-19':[
+      {id:'d12',name:'마음 — 중·하 읽기',time:'',cat:'naru'}],
+    '2026-07-20':[
+      {id:'s18',name:'디퍼 2기 문법 세션4',time:'21:00–23:00',cat:'deeper'},
+      {id:'d13',name:'마음 — 상 재독',time:'',cat:'naru'}],
+    '2026-07-21':[
+      {id:'s19',name:'나루의 밤 · 마음 토론',time:'20:00–22:00',cat:'naru',em:true},
+      {id:'d14',name:'파리의 노트르담 4부 4~6장 읽기',time:'오전',cat:'personal'}],
+    '2026-07-22':[
+      {id:'d15',name:'절창 완독 (하루 완독)',time:'',cat:'club'}],
+    '2026-07-23':[
+      {id:'s20',name:'도란도란 · 절창 토론',time:'09:30–12:00',cat:'club',em:true}],
+    '2026-07-25':[
+      {id:'s21',name:'디퍼 1기 수사 수료',time:'',cat:'deeper',em:true}],
+    '2026-07-26':[
+      {id:'s22',name:'프린키피아',time:'20:00–22:00',cat:'naru',em:true},
+      {id:'d16',name:'파리의 노트르담 5부 1~2장 읽기',time:'',cat:'personal'}],
+    '2026-07-27':[
+      {id:'s23',name:'디퍼 2기 문법 세션5',time:'21:00–23:00',cat:'deeper'}],
+    '2026-07-28':[
+      {id:'d17',name:'파리의 노트르담 6부 1~3장 읽기',time:'오전',cat:'personal'}],
+    '2026-07-30':[
+      {id:'d18',name:'파리의 노트르담 6부 4~5장 읽기 (1권 완독)',time:'오전',cat:'personal',em:true}],
   };
 }
 
