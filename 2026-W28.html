@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>햇살 W28 주간 계획표</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #FAF3EA;
+    color: #3C2415;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: #3C2415;
+    color: #FAF3EA;
+    height: 25mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .brand-line {
+    font-size: 8px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #FAF3EA;
+  }
+  .header-sub {
+    font-size: 10px;
+    font-weight: 300;
+    opacity: 0.55;
+    letter-spacing: 2px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    background: #F5EBE0;
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #3C2415;
+  }
+  .legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── GRID ── */
+  .grid-wrapper {
+    padding: 16px 12px;
+  }
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  /* ── DAY CARD ── */
+  .day-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(60,36,21,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+  .day-header {
+    padding: 7px 6px 6px;
+    text-align: center;
+  }
+  .day-header.weekday { background: #C4763A; }
+  .day-header.saturday { background: #C8845A; }
+  .day-header.sunday { background: #A0522D; }
+
+  .day-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #FAF3EA;
+    letter-spacing: 1px;
+  }
+  .day-date {
+    font-size: 9px;
+    color: #FAF3EA;
+    opacity: 0.75;
+    margin-top: 1px;
+  }
+
+  .day-body {
+    padding: 6px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  /* ── EVENT CARD ── */
+  .event {
+    border-radius: 5px;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .event-time {
+    font-size: 8.5px;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 1px;
+  }
+  .event-title {
+    font-weight: 600;
+    display: block;
+  }
+  .event-sub {
+    font-size: 8.5px;
+    opacity: 0.75;
+    display: block;
+  }
+
+  /* 카테고리 컬러 */
+  .cat-routine   { background: #E8F5E9; color: #2E7D32; border-left: 3px solid #66BB6A; }
+  .cat-fixed     { background: #FBE9E7; color: #BF360C; border-left: 3px solid #C8845A; }
+  .cat-reading   { background: #EDE7F6; color: #4527A0; border-left: 3px solid #9575CD; }
+  .cat-debate    { background: #FFF3E0; color: #E65100; border-left: 3px solid #FFA726; }
+  .cat-promo     { background: #E3F2FD; color: #0D47A1; border-left: 3px solid #42A5F5; }
+  .cat-church    { background: #FCE4EC; color: #880E4F; border-left: 3px solid #F48FB1; }
+  .cat-medical   { background: #E0F2F1; color: #004D40; border-left: 3px solid #4DB6AC; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    text-align: center;
+    padding: 18px 12px 24px;
+    font-size: 11.5px;
+    color: #C4763A;
+    opacity: 0.55;
+    letter-spacing: 0.8px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .week-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 400px) {
+    .week-grid {
+      grid-template-columns: 1fr;
+    }
+    .header-title { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <span class="brand-line">P O G N A R U &nbsp;×&nbsp; C l a u d e</span>
+  <h1 class="header-title">2025년 7월 28주차 계획표</h1>
+  <span class="header-sub">W28 &nbsp;·&nbsp; 07.06 — 07.12</span>
+</header>
+
+<!-- ══ LEGEND ══ -->
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:#66BB6A"></span>루틴</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#C8845A"></span>고정</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#9575CD"></span>독서</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#FFA726"></span>토론</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#42A5F5"></span>홍보</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#F48FB1"></span>성당</div>
+  <div class="legend-item"><span class="legend-dot" style="background:#4DB6AC"></span>병원</div>
+</div>
+
+<!-- ══ WEEK GRID ══ -->
+<div class="grid-wrapper">
+<div class="week-grid">
+
+  <!-- ── 월요일 7/7 ── -->
+  <div class="day-card">
+    <div class="day-header weekday">
+      <div class="day-name">MON</div>
+      <div class="day-date">07.07</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-routine">
+        <span class="event-time">05:50–06:20</span>
+        <span class="event-title">☀️ 선릿모닝</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">06:00–07:00</span>
+        <span class="event-title">✝️ 새벽복사</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-medical">
+        <span class="event-time">14:00–14:30</span>
+        <span class="event-title">🦷 치과진료</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오전/오후</span>
+        <span class="event-title">📖 에디톨로지</span>
+        <span class="event-sub">1부 3~6장 (7/1 토론 전 완료 역산)</span>
+      </div>
+
+      <div class="event cat-debate">
+        <span class="event-time">21:00–23:00</span>
+        <span class="event-title">💬 디퍼 언브랜딩</span>
+        <span class="event-sub">2기 문법 세션1</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">22:30–23:00</span>
+        <span class="event-title">🌙 원서읽기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 화요일 7/8 ── -->
+  <div class="day-card">
+    <div class="day-header weekday">
+      <div class="day-name">TUE</div>
+      <div class="day-date">07.08</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-routine">
+        <span class="event-time">05:50–06:20</span>
+        <span class="event-title">☀️ 선릿모닝</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">06:30–06:45</span>
+        <span class="event-title">🗣 중급회화</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오전</span>
+        <span class="event-title">📖 파리의 노트르담</span>
+        <span class="event-sub">1권 1부 5~6장</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오후</span>
+        <span class="event-title">📖 에디톨로지</span>
+        <span class="event-sub">1부 7~10장</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">22:30–23:00</span>
+        <span class="event-title">🌙 원서읽기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 수요일 7/9 ── -->
+  <div class="day-card">
+    <div class="day-header weekday">
+      <div class="day-name">WED</div>
+      <div class="day-date">07.09</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-routine">
+        <span class="event-time">05:50–06:20</span>
+        <span class="event-title">☀️ 선릿모닝</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">06:30–06:45</span>
+        <span class="event-title">🗣 중급회화</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">10:00–10:40</span>
+        <span class="event-title">✝️ 오전미사</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">10:40–12:00</span>
+        <span class="event-title">✝️ 레지오</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오후</span>
+        <span class="event-title">📖 에디톨로지</span>
+        <span class="event-sub">1부 복습 + 2부 예습 (7/9 토론 전 1부 완료 확인)</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">22:30–23:00</span>
+        <span class="event-title">🌙 원서읽기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 목요일 7/10 ── -->
+  <div class="day-card">
+    <div class="day-header weekday">
+      <div class="day-name">THU</div>
+      <div class="day-date">07.10</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-routine">
+        <span class="event-time">05:50–06:20</span>
+        <span class="event-title">☀️ 선릿모닝</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">06:30–06:45</span>
+        <span class="event-title">🗣 중급회화</span>
+      </div>
+
+      <div class="event cat-medical">
+        <span class="event-time">09:00–09:30</span>
+        <span class="event-title">🏥 퀸즈여성병원</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오전</span>
+        <span class="event-title">📖 파리의 노트르담</span>
+        <span class="event-sub">1권 1부 7~8장</span>
+      </div>
+
+      <div class="event cat-debate">
+        <span class="event-time">21:00–23:00</span>
+        <span class="event-title">💬 디퍼 언브랜딩</span>
+        <span class="event-sub">1기 수사 세션9</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">22:30–23:00</span>
+        <span class="event-title">🌙 원서읽기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 금요일 7/11 ── -->
+  <div class="day-card">
+    <div class="day-header weekday">
+      <div class="day-name">FRI</div>
+      <div class="day-date">07.11</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-routine">
+        <span class="event-time">05:50–06:20</span>
+        <span class="event-title">☀️ 선릿모닝</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">06:30–06:45</span>
+        <span class="event-title">🗣 중급회화</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">10:00–10:40</span>
+        <span class="event-title">✝️ 오전미사</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">10:50–12:00</span>
+        <span class="event-title">✝️ 마르코</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">12:00–14:00</span>
+        <span class="event-title">🍽 점심 식사</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">저녁</span>
+        <span class="event-title">📖 에디톨로지</span>
+        <span class="event-sub">2부 1~5장 (주말 토론 전 완료 준비)</span>
+      </div>
+
+      <div class="event cat-routine">
+        <span class="event-time">22:30–23:00</span>
+        <span class="event-title">🌙 원서읽기</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 토요일 7/12 ── -->
+  <div class="day-card">
+    <div class="day-header saturday">
+      <div class="day-name">SAT</div>
+      <div class="day-date">07.12</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-church">
+        <span class="event-time">14:00–15:50</span>
+        <span class="event-title">✝️ 임원회의</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-church">
+        <span class="event-time">16:00–17:00</span>
+        <span class="event-title">✝️ 어린이 미사</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">오전 (자유)</span>
+        <span class="event-title">📖 에디톨로지</span>
+        <span class="event-sub">2부 6~10장 완료 목표 (7/9 토론 전 분량 확인)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 일요일 7/13 ── -->
+  <div class="day-card">
+    <div class="day-header sunday">
+      <div class="day-name">SUN</div>
+      <div class="day-date">07.13</div>
+    </div>
+    <div class="day-body">
+
+      <div class="event cat-church">
+        <span class="event-time">09:30–17:00</span>
+        <span class="event-title">📻 CPBC 방송캠프</span>
+        <span class="event-sub">성당</span>
+      </div>
+
+      <div class="event cat-reading">
+        <span class="event-time">저녁 (귀가 후)</span>
+        <span class="event-title">📖 파리의 노트르담</span>
+        <span class="event-sub">1권 1부 9~10장 (일요일 집중독서)</span>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /week-grid -->
+</div><!-- /grid-wrapper -->
+
+<!-- ══ 독서 분량 요약 박스 ══ -->
+<div style="background:#F5EBE0; margin: 0 12px 20px; border-radius:12px; padding:16px 18px;">
+  <div style="font-size:12px; font-weight:700; color:#3C2415; letter-spacing:1px; margin-bottom:10px; opacity:0.8;">
+    📚 W28 독서 분량 배분 요약
+  </div>
+  <table style="width:100%; font-size:11px; color:#3C2415; border-collapse:collapse;">
+    <thead>
+      <tr style="border-bottom:1px solid #C8845A44;">
+        <th style="text-align:left; padding:5px 8px; font-weight:700; color:#C4763A;">책</th>
+        <th style="text-align:left; padding:5px 8px; font-weight:700; color:#C4763A;">W28 목표 분량</th>
+        <th style="text-align:left; padding:5px 8px; font-weight:700; color:#C4763A;">마감</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #F5EBE0;">
+        <td style="padding:6px 8px;">📗 에디톨로지</td>
+        <td style="padding:6px 8px;">1부 3~10장 완료 + 2부 1~10장 진입</td>
+        <td style="padding:6px 8px;">7/1 토론 전<br><span style="font-size:10px;opacity:0.65;">(이번 주 내 1부 완료 필수)</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid #F5EBE0;">
+        <td style="padding:6px 8px;">💜 마음 (나쓰메)</td>
+        <td style="padding:6px 8px;">상편 재독 시작 (원서읽기 + 오후 틈틈이)</td>
+        <td style="padding:6px 8px;">7/20까지 상편 재독</td>
+      </tr>
+      <tr style="border-bottom:1px solid #F5EBE0;">
+        <td style="padding:6px 8px;">🟠 절창 (구병모)</td>
+        <td style="padding:6px 8px;">여유 있는 날 하루 완독 배치</td>
+        <td style="padding:6px 8px;">7/23까지 완독</td>
+      </tr>
+      <tr>
+        <td style="padding:6px 8px;">🔵 파리의 노트르담</td>
+        <td style="padding:6px 8px;">화·목 오전 + 일요일 집중<br>1권 1부 5~10장 (주 5~6장 페이스)</td>
+        <td style="padding:6px 8px;">7월 중 1권 완독</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  햇살 &nbsp;|&nbsp; W28 주간 계획표 &nbsp;|&nbsp; 바쁜 한 주지만, 잘 쉬는 것도 계획이에요 🍊
+</footer>
+
+</body>
+</html>
+```
